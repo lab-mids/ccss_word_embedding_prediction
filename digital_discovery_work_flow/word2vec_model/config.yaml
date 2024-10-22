@@ -7,7 +7,7 @@ rule_collect_papers:
   config_path: "pybliometrics.cfg"
   # Keywords for the paper query
   keywords: "'electrocatalyst' OR 'high entropy alloy'"
-  # Start year for the paper query, or None for no start year
+  # Start year for the paper query, or "" for no start year
   startyear: ""
   # End year for the paper query
   endyear: 2022
