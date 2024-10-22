@@ -41,7 +41,7 @@ snakemake
 
 ### 2. **Data Source**
 
-The dataset used for model training and validation is available in [Zanendo repository](https://doi.org/TODO). You can download the data from this source to reproduce the results.
+The dataset used for model training and validation is available in [Zenodo repository](https://doi.org/TODO). You can download the data from this source to reproduce the results.
 
 ### 3. **Prediction Models**
 
@@ -96,21 +96,21 @@ To reproduce the results, ensure you have the following installed:
 
 ## Authors
 
-- **Lei Zhang** (Corresponding Author)  
-  Interdisciplinary Centre for Advanced Materials Simulation, Ruhr University Bochum  
-  E-mail: [lei.zhang-w2i@rub.de](mailto:lei.zhang-w2i@rub.de)  
-- **Lars Banko**  
-  Chair for Materials Discovery and Interfaces, Institute for Materials, Ruhr University Bochum  
-  E-mail: [lars.banko@rub.de](mailto:lars.banko@rub.de)  
-- **Wolfgang Schuhmann**  
-  Analytical Chemistry -- Center for Electrochemical Sciences (CES), Faculty of Chemistry and Biochemistry, Ruhr University Bochum  
-  E-mail: [wolfgang.schuhmann@rub.de](mailto:wolfgang.schuhmann@rub.de)  
-- **Alfred Ludwig**  
-  Chair for Materials Discovery and Interfaces, Institute for Materials, Ruhr University Bochum  
-  E-mail: [alfred.ludwig@rub.de](mailto:alfred.ludwig@rub.de)  
-- **Markus Stricker**  
-  Interdisciplinary Centre for Advanced Materials Simulation, Ruhr University Bochum  
-  E-mail: [markus.stricker@rub.de](mailto:markus.stricker@rub.de)  
+- **Lei Zhang** (Corresponding Author)
+  Interdisciplinary Centre for Advanced Materials Simulation, Ruhr University Bochum
+  E-mail: [lei.zhang-w2i@rub.de](mailto:lei.zhang-w2i@rub.de)
+- **Lars Banko**
+  Chair for Materials Discovery and Interfaces, Institute for Materials, Ruhr University Bochum
+  E-mail: [lars.banko@rub.de](mailto:lars.banko@rub.de)
+- **Wolfgang Schuhmann**
+  Analytical Chemistry -- Center for Electrochemical Sciences (CES), Faculty of Chemistry and Biochemistry, Ruhr University Bochum
+  E-mail: [wolfgang.schuhmann@rub.de](mailto:wolfgang.schuhmann@rub.de)
+- **Alfred Ludwig**
+  Chair for Materials Discovery and Interfaces, Institute for Materials, Ruhr University Bochum
+  E-mail: [alfred.ludwig@rub.de](mailto:alfred.ludwig@rub.de)
+- **Markus Stricker**
+  Interdisciplinary Centre for Advanced Materials Simulation, Ruhr University Bochum
+  E-mail: [markus.stricker@rub.de](mailto:markus.stricker@rub.de)
 
 
 ## How to Cite
