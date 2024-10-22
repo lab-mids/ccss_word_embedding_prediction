@@ -36,7 +36,7 @@ The first step in this workflow is to collect research papers related to electro
 #### To run:
 ```bash
 cd word2vec_model
-snakemake
+snakemake --cores 1
 ```
 
 ### 2. **Data Source**
@@ -50,7 +50,7 @@ Once the Word2Vec model and the dataset are ready, the next step is to run the p
 #### To run:
 ```bash
 cd prediction_models
-snakemake
+snakemake --cores 1
 ```
 
 ### 4. **Figures**
@@ -60,7 +60,7 @@ The figures used in the paper can be reproduced using the scripts in the `figure
 #### To run:
 ```bash
 cd figures
-snakemake
+snakemake --cores 1
 ```
 
 ### 5. **Tables**
@@ -70,7 +70,7 @@ The tables presented in the paper are generated using the scripts in the `tables
 #### To run:
 ```bash
 cd tables
-snakemake
+snakemake --cores 1
 ```
 
 ## Requirements
@@ -81,6 +81,7 @@ To reproduce the results, ensure you have the following installed, e.g. in a `co
 - [Snakemake](https://snakemake.readthedocs.io/)
 - Required Python packages listed in `requirements.txt`
 
+Note, we had issues with pulp versions > 2.6.0 and therefore suggest to explicitly use `pulp==2.6.0`
 
 ### Installation
 
