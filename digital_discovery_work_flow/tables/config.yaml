@@ -1,0 +1,107 @@
+# Configuration for calculating concentration statistics
+
+rule_calculate_concentration_stats:
+  filepaths:
+    - "path/to/your/Ag_Pd_Pt_material_system.csv"
+    - "path/to/your/Ag_Pd_Ru_material_system.csv"
+    - "path/to/your/Ag_Pd_Pt_Ru_material_system.csv"
+  output_paths:
+    - "path/to/your/stats_Ag-Pd-Pt.csv"
+    - "path/to/your/stats_Ag-Pd-Ru.csv"
+    - "path/to/your/stats_Ag-Pd-Pt-Ru.csv"
+  in_percentage: False  # Set to True if your data is in percentage format
+
+# Configuration for calculating current density statistics
+
+rule_calculate_current_density_stats:
+
+  # List of input file paths for CSV files containing current density data
+  filepaths:
+    - "path/to/your/Ag_Pd_Ru_material_system.csv"
+    - "path/to/your/Ag_Pd_Pt_material_system.csv"
+    - "path/to/your/Ag_Pd_Pt_Ru_material_system.csv"
+
+  # Name of the column in the CSV files that represents current density (e.g., 'Current_at_850mV')
+  target_column: "Current_at_850mV"
+
+  # Output file path for the results (a CSV file containing calculated statistics)
+  output_path: "path/to/your/current_density_stats.csv"
+
+# Configuration for analyzing prediction metrics
+
+rule_analyze_predictions:
+
+  # List of dataset file paths (CSV files containing the data)
+  data_paths:
+    - "path/to/your/Ag-Pd-Pt-Ru_with_predictions_Gpy.csv"
+    - "path/to/your/Ag-Pd-Pt-Ru_with_predictions_Gpy_with_embedding.csv"
+    - "path/to/your/Ag-Pd-Pt-Ru_with_predictions_Standard_Vec.csv"
+
+  # List of names corresponding to each dataset
+  names:
+    - "Gpy_Model"
+    - "Gpy_Embedding_Enhanced_Model"
+    - "Standard_Vec_Model"
+
+  # Name of the column for actual values
+  actual_col: "Current_at_850mV"
+
+  # Name of the column for predicted values
+  predicted_col: "Predicted_Value"
+
+  # Optional column to apply filtering
+  filter_col: "Current_at_850mV"  # Set to null if no filtering is needed
+
+  # Value for filtering data (e.g., "< -0.2")
+  filter_value: -0.2  # Set to null if no filtering is needed
+
+  # Metrics to skip during analysis (optional), e.g., '["r2_score", "mean_absolute_error"]' or '[]'
+  metrics_to_skip: '[]'
+
+  # Output file path for saving the results
+  output_file: "path/to/your/results.csv"
+
+# Configuration for the integrated_density_plot rule
+
+# List of CSV file paths to be processed
+filepaths:
+  - 'path/to/Ag-Pd-Pt-Ru.csv'
+  - 'path/to/Ag-Pd-Pt-Ru.csv'
+  - 'path/to/Ag-Pd-Pt-Ru_with_predictions_Gpy.csv'
+  - 'path/to/Ag-Pd-Pt-Ru_with_predictions_Gpy_with_embedding.csv'
+  - 'path/to/Ag-Pd-Pt-Ru_with_predictions_Standard_Vec.csv'
+
+# List of column names to be used for color-coding each file
+columns:
+  - 'Current_at_850mV'
+  - 'Current_at_850mV'
+  - 'Current_at_850mV'
+  - 'Current_at_850mV'
+  - 'Similarity'
+
+# Plot types for each file (either 'xy' for a regular plot or 'x_only' for a combined x plot)
+plot_types:
+  - 'xy'
+  - 'x_only'
+  - 'x_only'
+  - 'x_only'
+  - 'x_only'
+
+# Custom legend labels for x_only plots
+legend_labels:
+  - 'Experimental'
+  - 'GPy'
+  - 'GPy with Embedding'
+  - 'Standard Vector'
+
+# Font size for all text elements
+fontsize: 16
+
+# Width of each subplot in inches
+subplot_width: 7
+
+# Height of each subplot in inches
+subplot_height: 5
+
+# Path to save the output PDF
+output_file: 'path/to/save/IntegratedDensityCombinedXPlot.pdf'

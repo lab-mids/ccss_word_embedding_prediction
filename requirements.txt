@@ -1,0 +1,11 @@
+gensim
+GPy
+matnexus
+matplotlib
+nltk
+numpy
+pandas
+plotly
+scikit_learn
+scipy
+seaborn

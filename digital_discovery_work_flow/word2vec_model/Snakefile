@@ -1,0 +1,121 @@
+import os
+import json
+import configparser
+
+
+# Subclass ConfigParser to maintain case sensitivity
+class MyConfigParser(configparser.ConfigParser):
+    def optionxform(self, optionstr):
+        return optionstr  # Maintain original case
+
+
+# Function to update the pybliometrics.cfg file or create it if it doesn't exist
+def update_pybliometrics_config(config_path, new_config):
+    config = MyConfigParser()  # Use the custom config parser
+
+    # Check if the config file exists
+    if os.path.exists(config_path):
+        # Read the existing config file
+        config.read(config_path)
+    else:
+        # Create a new config file if it doesn't exist
+        print(f"Config file not found at {config_path}. Creating a new one.")
+
+    # Update sections based on the new_config dictionary
+    for section, values in new_config.items():
+        if not config.has_section(section):
+            config.add_section(section)
+        for key, value in values.items():
+            if key == "APIKey" and isinstance(value,list):
+                # Join list of API keys into a comma-separated string
+                value = ",".join(value)
+            config.set(section,key,str(value))
+
+    # Write the updated (or new) config back to the file
+    with open(config_path,'w') as configfile:
+        config.write(configfile)
+
+# Define parameters
+configfile: "config.yaml"
+
+# Top-level rule to encompass the entire workflow
+rule all:
+    input:
+        config["rule_collect_papers"]["output_path"],
+        config["rule_process_papers"]["output_path"],
+        config["rule_generate_word2vec"]["model_path"],
+        config["rule_generate_material_systems"]["done_file"],
+        config["rule_process_material_systems"]["done_file"],
+        config["rule_calculate_pareto_front"]["done_file"]
+
+# Rule to collect papers from multiple sources
+rule collect_papers:
+    output:
+        config["rule_collect_papers"]["output_path"]
+    params:
+        config_path=config["rule_collect_papers"]["config_path"],
+        keywords=config["rule_collect_papers"]["keywords"],
+        startyear=config["rule_collect_papers"]["startyear"],
+        endyear=config["rule_collect_papers"]["endyear"],
+        openaccess=config["rule_collect_papers"]["openaccess"],
+        output_path=config["rule_collect_papers"]["output_path"]
+    run:
+        # Update the pybliometrics.cfg file at the given config_path, or create it if it doesn't exist
+        update_pybliometrics_config(params.config_path,config["pybliometrics_config"])
+
+        # Run the paper collection script using the updated or newly created pybliometrics.cfg file
+        shell("""
+            set -x
+            python script/collect_papers.py \
+                --config_path "{params.config_path}" \
+                --keywords "{params.keywords}" \
+                --startyear {params.startyear} \
+                --endyear {params.endyear} \
+                --openaccess {params.openaccess} \
+                --output_path "{params.output_path}"
+        """)
+
+# Rule to process collected papers
+rule process_papers:
+    input:
+        config["rule_collect_papers"]["output_path"]
+    output:
+        config["rule_process_papers"]["output_path"]
+    params:
+        input_path=config["rule_process_papers"]["input_path"],
+        output_path=config["rule_process_papers"]["output_path"]
+    shell:
+        """
+        python script/process_papers.py \
+            --input_path "{params.input_path}" \
+            --output_path "{params.output_path}"
+        """
+
+# Rule to generate word2vec model
+rule generate_word2vec:
+    input:
+        config["rule_process_papers"]["output_path"]
+    output:
+        config["rule_generate_word2vec"]["model_path"]
+    params:
+        input_path=config["rule_generate_word2vec"]["input_path"],
+        model_path=config["rule_generate_word2vec"]["model_path"],
+        sg=config["rule_generate_word2vec"]["sg"],
+        vector_size=config["rule_generate_word2vec"]["vector_size"],
+        hs=config["rule_generate_word2vec"]["hs"],
+        window=config["rule_generate_word2vec"]["window"],
+        min_count=config["rule_generate_word2vec"]["min_count"],
+        workers=config["rule_generate_word2vec"]["workers"]
+    shell:
+        """
+        python script/generate_word2vec.py \
+            --input_path "{params.input_path}" \
+            --model_path "{params.model_path}" \
+            --sg {params.sg} \
+            --vector_size {params.vector_size} \
+            --hs {params.hs} \
+            --window {params.window} \
+            --min_count {params.min_count} \
+            --workers {params.workers}
+        """
+

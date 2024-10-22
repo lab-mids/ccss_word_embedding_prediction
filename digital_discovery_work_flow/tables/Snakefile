@@ -1,0 +1,69 @@
+# Define parameters
+configfile: "config.yaml"
+
+# Top-level rule to encompass the entire workflow
+rule all:
+    input:
+        expand("{output}", output=config["rule_calculate_concentration_stats"]["output_paths"]) +
+        expand("{output}", output=config["rule_calculate_current_density_stats"]["output_path"])
+
+# Rule for calculating concentration statistics for elements
+
+rule calculate_concentration_stats:
+    input:
+        filepaths=config["rule_calculate_concentration_stats"]["filepaths"]
+    output:
+        output_paths=config["rule_calculate_concentration_stats"]["output_paths"]
+    params:
+        in_percentage=config["rule_calculate_concentration_stats"]["in_percentage"]
+    shell:
+        """
+        python script/calculate_concentration_stats.py \
+            --filepaths {input.filepaths} \
+            --in_percentage {params.in_percentage} \
+            --output_paths {output.output_paths}
+        """
+
+# Rule for calculating current density statistics for elements
+
+rule calculate_current_density_stats:
+    input:
+        filepaths=config["rule_calculate_current_density_stats"]["filepaths"]
+    output:
+        output_path=config["rule_calculate_current_density_stats"]["output_path"]
+    params:
+        target_column=config["rule_calculate_current_density_stats"]["target_column"]
+    shell:
+        """
+        python script/calculate_current_density_stats.py \
+            --filepaths {input.filepaths} \
+            --target_column {params.target_column} \
+            --output_path {output.output_path}
+        """
+
+# Rule for analyzing prediction metrics
+
+rule analyze_predictions:
+    input:
+        data_paths=config["rule_analyze_predictions"]["data_paths"]
+    output:
+        output_file=config["rule_analyze_predictions"]["output_file"]
+    params:
+        names=config["rule_analyze_predictions"]["names"],
+        actual_col=config["rule_analyze_predictions"]["actual_col"],
+        predicted_col=config["rule_analyze_predictions"]["predicted_col"],
+        filter_col=config["rule_analyze_predictions"]["filter_col"],
+        filter_value=config["rule_analyze_predictions"]["filter_value"],
+        metrics_to_skip=" ".join([f"\"{metric}\"" for metric in config["rule_analyze_predictions"]["metrics_to_skip"]])  # Properly quoting metrics to avoid issues
+    shell:
+        """
+        python script/analyze_predictions.py \
+            --data_paths {input.data_paths} \
+            --names {params.names} \
+            --actual_col {params.actual_col} \
+            --predicted_col {params.predicted_col} \
+            --filter_col {params.filter_col} \
+            --filter_value {params.filter_value} \
+            --metrics_to_skip {params.metrics_to_skip} \
+            --output_file {output.output_file}
+        """
