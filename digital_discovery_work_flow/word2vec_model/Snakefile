@@ -146,4 +146,3 @@ rule generate_word2vec:
             --min_count {params.min_count} \
             --workers {params.workers}
         """
-

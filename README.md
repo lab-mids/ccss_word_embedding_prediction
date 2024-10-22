@@ -77,7 +77,7 @@ snakemake --cores 1
 
 To reproduce the results, ensure you have the following installed, e.g. in a `conda` environment:
 
-- Python 3.8+
+- Python 3.10+
 - [Snakemake](https://snakemake.readthedocs.io/)
 - Required Python packages listed in `requirements.txt`
 
@@ -94,6 +94,7 @@ Note, we had issues with pulp versions > 2.6.0 and therefore suggest to explicit
 2. Install required packages:
    ```bash
    pip install -r requirements.txt
+   python -m spacy download en_core_web_sm
    ```
 
 ## Authors

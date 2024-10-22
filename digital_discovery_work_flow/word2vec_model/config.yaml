@@ -53,7 +53,7 @@ rule_generate_word2vec:
   # Input path for the processed papers CSV file
   input_path: "HEA_electrocatalyst.csv_processed_df.csv"
   # Output path for the generated word2vec model
-  model_path: "/model/HEA_electrocatalyst.csv.model"
+  model_path: "HEA_electrocatalyst.csv.model"
   # Training algorithm: 1 for skip-gram, 0 for CBOW
   sg: 1
   # Dimensionality of the word vectors
@@ -66,4 +66,3 @@ rule_generate_word2vec:
   min_count: 1
   # Number of worker threads to train the model
   workers: 4
-
