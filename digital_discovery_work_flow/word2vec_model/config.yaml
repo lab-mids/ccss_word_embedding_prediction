@@ -46,14 +46,14 @@ rule_process_papers:
   # Input path for the collected papers CSV file
   input_path: "HEA_electrocatalyst.csv"
   # Output path for the processed papers CSV file
-  output_path: "HEA_electrocatalyst.csv_processed_df.csv"
+  output_path: "HEA_electrocatalyst_processed_df.csv"
 
 # Parameters for generating word2vec model
 rule_generate_word2vec:
   # Input path for the processed papers CSV file
-  input_path: "HEA_electrocatalyst.csv_processed_df.csv"
+  input_path: "HEA_electrocatalyst_processed_df.csv"
   # Output path for the generated word2vec model
-  model_path: "HEA_electrocatalyst.csv.model"
+  model_path: "HEA_electrocatalyst.model"
   # Training algorithm: 1 for skip-gram, 0 for CBOW
   sg: 1
   # Dimensionality of the word vectors
