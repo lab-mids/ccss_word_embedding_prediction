@@ -46,33 +46,6 @@ rule all:
         config["rule_generate_word2vec"]["model_path"],
 
 
-# Rule to collect papers from multiple sources
-# rule collect_papers:
-#     output:
-#         config["rule_collect_papers"]["output_path"]
-#     params:
-#         config_path=config["rule_collect_papers"]["config_path"],
-#         keywords=config["rule_collect_papers"]["keywords"],
-#         startyear=config["rule_collect_papers"]["startyear"],
-#         endyear=config["rule_collect_papers"]["endyear"],
-#         openaccess=config["rule_collect_papers"]["openaccess"],
-#         output_path=config["rule_collect_papers"]["output_path"]
-#     run:
-#         # Update the pybliometrics.cfg file at the given config_path, or create it if it doesn't exist
-#         update_pybliometrics_config(params.config_path,config["pybliometrics_config"])
-#
-#         # Run the paper collection script using the updated or newly created pybliometrics.cfg file
-#         shell("""
-#             set -x
-#             python script/collect_papers.py \
-#                 --config_path "{params.config_path}" \
-#                 --keywords "{params.keywords}" \
-#                 --startyear {params.startyear} \
-#                 --endyear {params.endyear} \
-#                 --openaccess {params.openaccess} \
-#                 --output_path "{params.output_path}"
-#         """)
-
 rule collect_papers:
     output:
         config["rule_collect_papers"]["output_path"]
