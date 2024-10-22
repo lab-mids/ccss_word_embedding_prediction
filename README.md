@@ -1,7 +1,7 @@
 
 # Composition-property Extrapolation for Compositionally Complex Solid Solutions Based on Word Embeddings
 
-This repository contains the code and workflow for the paper **"Composition-property extrapolation for compositionally complex solid solutions based on word embeddings: efficient materials discovery"**, submitted to *Digital Discovery*. This workflow guides users through the process of collecting papers, building predictive models, and generating figures and tables used in the paper.
+This repository contains the code and workflow for the paper **"Composition-property extrapolation for compositionally complex solid solutions based on word embeddings: efficient materials discovery"**, submitted to *Digital Discovery*. With this workflow, the abstract collection, model building, figure and table generation, can be reproduced.
 
 ## Repository Structure
 
@@ -31,7 +31,7 @@ digital_discovery_workflow/
 
 ### 1. **Word2Vec Model**
 
-The first step in this workflow is to collect research papers related to electrocatalysts and build a Word2Vec model from these papers. The Word2Vec model will be trained using the scripts located in `word2vec_model`. This model forms the basis for predicting material properties in the later steps.
+The first step in this workflow is to collect research papers related to electrocatalysts and build a Word2Vec model from the abstracts of those papers. The Word2Vec model are trained using the scripts located in `word2vec_model`. This model forms the basis for the word embeddings end the prediction of the material properties in later steps.
 
 #### To run:
 ```bash
@@ -41,11 +41,11 @@ snakemake
 
 ### 2. **Data Source**
 
-The dataset used for model training and validation is available in [Zenodo repository](https://doi.org/TODO). You can download the data from this source to reproduce the results.
+The experimental dataset used for model training and validation is available on [Zenodo repository](https://doi.org/**TODO**). Download it from there to reproduce the results.
 
 ### 3. **Prediction Models**
 
-Once the Word2Vec model and the dataset are ready, the next step is to run the prediction models located in the `prediction_models` directory. These scripts will generate the models used in the paper to extrapolate the composition-property relationships for the materials.
+Once the Word2Vec model and the dataset are ready, the next step is to run the prediction models located in the `prediction_models` directory. The scripts in there generate the models used in the paper to extrapolate the composition-property relationships for the materials.
 
 #### To run:
 ```bash
@@ -55,7 +55,7 @@ snakemake
 
 ### 4. **Figures**
 
-The figures used in the paper can be reproduced using the scripts in the `figures` directory. This will generate the exact same figures as those shown in the paper.
+The figures used in the paper can be reproduced using the scripts in the `figures` directory. This will generate the exact same figures as those included in the paper.
 
 #### To run:
 ```bash
@@ -75,11 +75,12 @@ snakemake
 
 ## Requirements
 
-To reproduce the results, ensure you have the following installed:
+To reproduce the results, ensure you have the following installed, e.g. in a `conda` environment:
 
 - Python 3.8+
 - [Snakemake](https://snakemake.readthedocs.io/)
 - Required Python packages listed in `requirements.txt`
+
 
 ### Installation
 
@@ -116,6 +117,8 @@ To reproduce the results, ensure you have the following installed:
 ## How to Cite
 
 Please cite this repository and the related paper when using this code for your research:
+
+**TODO** add arxive doi before publication
 
 ```
 @article{zhang2024composition_property,
