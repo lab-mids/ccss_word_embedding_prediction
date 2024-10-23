@@ -20,6 +20,8 @@ rule visualize_material_vectors:
         model=config["rule_visualize_material_vectors"]["model_path"]
     output:
         plot=config["rule_visualize_material_vectors"]["output_path"]
+    log:
+        "logs/visualize_material_vectors.log"
     params:
         # Quote each material to ensure they're treated as single arguments
         material_list=" ".join('"{}"'.format(item) for item in config["rule_visualize_material_vectors"]["material_list"]),
@@ -45,7 +47,7 @@ rule visualize_material_vectors:
             --width {params.width} \
             --height {params.height} \
             --textfont_size {params.textfont_size} \
-            --show_legend {params.show_legend} \
+            --show_legend {params.show_legend} > {log} 2>&1
         """
 
 # Snakefile for generating an element concentration plot
@@ -56,13 +58,15 @@ rule generate_element_concentration_plot:
         data3=config["rule_generate_element_concentration_plot"]["data3"]
     output:
         plot=config["rule_generate_element_concentration_plot"]["output"]
+    log:
+        "logs/generate_element_concentration_plot.log"
     shell:
         """
         python script/generate_element_concentration_plot.py \
             --data1 "{input.data1}" \
             --data2 "{input.data2}" \
             --data3 "{input.data3}" \
-            --output "{output.plot}"
+            --output "{output.plot}" > {log} 2>&1
         """
 
 # Snakefile for plotting current density at 850mV
@@ -71,6 +75,8 @@ rule plot_current_density:
         data_paths=config["rule_plot_current_density"]["data_paths"]
     output:
         plot=config["rule_plot_current_density"]["output_path"]
+    log:
+        "logs/plot_current_density.log"
     params:
         system_names=" ".join(config["rule_plot_current_density"]["system_names"])
     shell:
@@ -78,7 +84,7 @@ rule plot_current_density:
         python script/plot_current_density.py \
             --data_paths {input.data_paths} \
             --system_names {params.system_names} \
-            --output_path {output.plot}
+            --output_path {output.plot} > {log} 2>&1
         """
 
 # Snakefile for plotting stacked step histogram
@@ -87,6 +93,8 @@ rule plot_stacked_step_histogram:
         data_paths=config["rule_plot_stacked_step_histogram"]["data_paths"]
     output:
         plot=config["rule_plot_stacked_step_histogram"]["output_path"]
+    log:
+        "logs/plot_stacked_step_histogram.log"
     params:
         system_names=" ".join(config["rule_plot_stacked_step_histogram"]["system_names"]),
         bins=config["rule_plot_stacked_step_histogram"]["bins"],
@@ -98,7 +106,7 @@ rule plot_stacked_step_histogram:
             --system_names {params.system_names} \
             --output_path {output.plot} \
             --bins {params.bins} \
-            --column_name {params.column_name}
+            --column_name {params.column_name} > {log} 2>&1
         """
 
 # Snakefile for plotting similarity scatter figures
@@ -109,6 +117,8 @@ rule plot_Ag_Pd_Ru_dataset_elements:
         data_paths=config["rule_plot_Ag_Pd_Ru_dataset_elements"]["data_paths"]
     output:
         plot=config["rule_plot_Ag_Pd_Ru_dataset_elements"]["output_path"]
+    log:
+        "logs/plot_Ag_Pd_Ru_dataset_elements.log"
     params:
         elements=" ".join(config["rule_plot_Ag_Pd_Ru_dataset_elements"]["elements"]),
         x_labels=" ".join(config["rule_plot_Ag_Pd_Ru_dataset_elements"]["x_labels"]),
@@ -126,7 +136,7 @@ rule plot_Ag_Pd_Ru_dataset_elements:
             --output_path {output.plot} \
             --ncols {params.ncols} \
             --nrows {params.nrows} \
-            --subplot_labels {params.subplot_labels}
+            --subplot_labels {params.subplot_labels} > {log} 2>&1
         """
 
 # Rule for generating "ternary_datasets_current.pdf"
@@ -135,6 +145,8 @@ rule plot_ternary_datasets_current:
         data_paths=config["rule_plot_ternary_datasets_current"]["data_paths"]
     output:
         plot=config["rule_plot_ternary_datasets_current"]["output_path"]
+    log:
+        "logs/plot_ternary_datasets_current.log"
     params:
         elements=" ".join(config["rule_plot_ternary_datasets_current"]["elements"]),
         x_labels=" ".join(config["rule_plot_ternary_datasets_current"]["x_labels"]),
@@ -156,7 +168,7 @@ rule plot_ternary_datasets_current:
             --output_path {output.plot} \
             --ncols {params.ncols} \
             --nrows {params.nrows} \
-            --subplot_labels {params.subplot_labels}
+            --subplot_labels {params.subplot_labels} > {log} 2>&1
         """
 
 # Rule for generating "Ag-Pd-Pt_dataset_elements.pdf"
@@ -165,6 +177,8 @@ rule plot_Ag_Pd_Pt_dataset_elements:
         data_paths=config["rule_plot_Ag_Pd_Pt_dataset_elements"]["data_paths"]
     output:
         plot=config["rule_plot_Ag_Pd_Pt_dataset_elements"]["output_path"]
+    log:
+        "logs/plot_Ag_Pd_Pt_dataset_elements.log"
     params:
         elements=" ".join(config["rule_plot_Ag_Pd_Pt_dataset_elements"]["elements"]),
         x_labels=" ".join(config["rule_plot_Ag_Pd_Pt_dataset_elements"]["x_labels"]),
@@ -182,7 +196,7 @@ rule plot_Ag_Pd_Pt_dataset_elements:
             --output_path {output.plot} \
             --ncols {params.ncols} \
             --nrows {params.nrows} \
-            --subplot_labels {params.subplot_labels}
+            --subplot_labels {params.subplot_labels} > {log} 2>&1
         """
 
 # Rule for generating "Ag-Pd-Pt-Ru_dataset_elements.pdf"
@@ -191,6 +205,8 @@ rule plot_Ag_Pd_Pt_Ru_dataset_elements:
         data_paths=config["rule_plot_Ag_Pd_Pt_Ru_dataset_elements"]["data_paths"]
     output:
         plot=config["rule_plot_Ag_Pd_Pt_Ru_dataset_elements"]["output_path"]
+    log:
+        "logs/plot_Ag_Pd_Pt_Ru_dataset_elements.log"
     params:
         elements=" ".join(config["rule_plot_Ag_Pd_Pt_Ru_dataset_elements"]["elements"]),
         x_labels=" ".join(config["rule_plot_Ag_Pd_Pt_Ru_dataset_elements"]["x_labels"]),
@@ -208,7 +224,7 @@ rule plot_Ag_Pd_Pt_Ru_dataset_elements:
             --output_path {output.plot} \
             --ncols {params.ncols} \
             --nrows {params.nrows} \
-            --subplot_labels {params.subplot_labels}
+            --subplot_labels {params.subplot_labels} > {log} 2>&1
         """
 
 rule plot_quaternary_current_with_predictions:
@@ -216,6 +232,8 @@ rule plot_quaternary_current_with_predictions:
         data_paths=config["rule_plot_quaternary_current_with_predictions"]["data_paths"]
     output:
         plot=config["rule_plot_quaternary_current_with_predictions"]["output_path"]
+    log:
+        "logs/plot_quaternary_current_with_predictions.log"
     params:
         elements=" ".join(config["rule_plot_quaternary_current_with_predictions"]["elements"]),
         x_labels=" ".join(config["rule_plot_quaternary_current_with_predictions"]["x_labels"]),
@@ -237,7 +255,7 @@ rule plot_quaternary_current_with_predictions:
             --output_path {output.plot} \
             --ncols {params.ncols} \
             --nrows {params.nrows} \
-            --subplot_labels {params.subplot_labels}
+            --subplot_labels {params.subplot_labels} > {log} 2>&1
         """
 
 
@@ -248,6 +266,8 @@ rule plot_correlation:
         data_paths=config["rule_plot_correlation"]["data_paths"]
     output:
         output_file=config["rule_plot_correlation"]["output_file"]
+    log:
+        "logs/plot_correlation.log"
     params:
         names=config["rule_plot_correlation"]["names"],
         x_col=config["rule_plot_correlation"]["x_col"],
@@ -265,7 +285,7 @@ rule plot_correlation:
             --combined {params.combined} \
             --show_fit_line {params.show_fit_line} \
             --filter "{params.filter}" \
-            --output_file {output.output_file}
+            --output_file {output.output_file} > {log} 2>&1
         """
 
 
@@ -275,6 +295,8 @@ rule integrated_density_plot:
         filepaths=config["rule_integrated_density_plot"]["filepaths"]  # List of CSV file paths
     output:
         pdf=config["rule_integrated_density_plot"]["output_file"]  # Output PDF file
+    log:
+        "logs/integrated_density_plot.log"  # Log file for integrated_density_plot rule
     params:
         columns=config["rule_integrated_density_plot"]["columns"],  # List of column names for color-coding
         plot_types=config["rule_integrated_density_plot"]["plot_types"],  # List of plot types
@@ -292,5 +314,5 @@ rule integrated_density_plot:
             --fontsize {params.fontsize} \
             --subplot_width {params.subplot_width} \
             --subplot_height {params.subplot_height} \
-            --output {output.pdf}
+            --output {output.pdf} > {log} 2>&1
         """

@@ -9,16 +9,15 @@ rule all:
         config["rule_standard_vector_method"]["output_file"],
         config["rule_predict_with_standard_vector"]["output_file"]
 
-
-
 # Rule for training GPy model and making predictions
-
 rule predict_gpy_model:
     input:
         train_files=config["rule_predict_gpy_model"]["train_files"],
         test_file=config["rule_predict_gpy_model"]["test_file"]
     output:
         output_file=config["rule_predict_gpy_model"]["output_file"]
+    log:
+        "logs/predict_gpy_model.log"  # Log file for predict_gpy_model rule
     params:
         target_column=config["rule_predict_gpy_model"]["target_column"]
     shell:
@@ -27,12 +26,10 @@ rule predict_gpy_model:
             --train_files {input.train_files} \
             --test_file {input.test_file} \
             --target_column {params.target_column} \
-            --output_file {output.output_file}
+            --output_file {output.output_file} > {log} 2>&1
         """
 
-
 # Rule for training GPy model with material vectors and making predictions
-
 rule predict_gpy_with_vector:
     input:
         train_files=config["rule_predict_gpy_with_vector"]["train_files"],
@@ -40,6 +37,8 @@ rule predict_gpy_with_vector:
         model_path=config["rule_predict_gpy_with_vector"]["model_path"]
     output:
         output_file=config["rule_predict_gpy_with_vector"]["output_file"]
+    log:
+        "logs/predict_gpy_with_vector.log"  # Log file for predict_gpy_with_vector rule
     params:
         target_column=config["rule_predict_gpy_with_vector"]["target_column"]
     shell:
@@ -49,18 +48,18 @@ rule predict_gpy_with_vector:
             --test_file {input.test_file} \
             --model_path {input.model_path} \
             --target_column {params.target_column} \
-            --output_file {output.output_file}
+            --output_file {output.output_file} > {log} 2>&1
         """
 
-
 # Rule for optimizing property weights and obtaining a standard vector
-
 rule standard_vector_method:
     input:
         model_path=config["rule_standard_vector_method"]["model_path"],
         data_paths=config["rule_standard_vector_method"]["data_paths"]
     output:
         output_file=config["rule_standard_vector_method"]["output_file"]
+    log:
+        "logs/standard_vector_method.log"  # Log file for standard_vector_method rule
     params:
         property_list=config["rule_standard_vector_method"]["property_list"]
     shell:
@@ -69,12 +68,10 @@ rule standard_vector_method:
             --model_path {input.model_path} \
             --data_paths {input.data_paths} \
             --property_list {params.property_list} \
-            --output_file {output.output_file}
+            --output_file {output.output_file} > {log} 2>&1
         """
 
-
 # Rule for prediction using the standard vector method
-
 rule predict_with_standard_vector:
     input:
         model_path=config["rule_predict_with_standard_vector"]["model_path"],
@@ -82,6 +79,8 @@ rule predict_with_standard_vector:
         results_path=config["rule_predict_with_standard_vector"]["results_path"]
     output:
         output_file=config["rule_predict_with_standard_vector"]["output_file"]
+    log:
+        "logs/predict_with_standard_vector.log"  # Log file for predict_with_standard_vector rule
     params:
         property_list=config["rule_predict_with_standard_vector"]["property_list"],
         elements=config["rule_predict_with_standard_vector"]["elements"]
@@ -93,5 +92,5 @@ rule predict_with_standard_vector:
             --results_path {input.results_path} \
             --property_list {params.property_list} \
             --elements {params.elements} \
-            --output_file {output.output_file}
+            --output_file {output.output_file} > {log} 2>&1
         """

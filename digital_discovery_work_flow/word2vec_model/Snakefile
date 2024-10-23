@@ -1,54 +1,19 @@
-import os
-import json
-import configparser
-
-
-# Subclass ConfigParser to maintain case sensitivity
-class MyConfigParser(configparser.ConfigParser):
-    def optionxform(self, optionstr):
-        return optionstr  # Maintain original case
-
-
-# Function to update the pybliometrics.cfg file or create it if it doesn't exist
-def update_pybliometrics_config(config_path, new_config):
-    config = MyConfigParser()  # Use the custom config parser
-
-    # Check if the config file exists
-    if os.path.exists(config_path):
-        # Read the existing config file
-        config.read(config_path)
-    else:
-        # Create a new config file if it doesn't exist
-        print(f"Config file not found at {config_path}. Creating a new one.")
-
-    # Update sections based on the new_config dictionary
-    for section, values in new_config.items():
-        if not config.has_section(section):
-            config.add_section(section)
-        for key, value in values.items():
-            if key == "APIKey" and isinstance(value,list):
-                # Join list of API keys into a comma-separated string
-                value = ",".join(value)
-            config.set(section,key,str(value))
-
-    # Write the updated (or new) config back to the file
-    with open(config_path,'w') as configfile:
-        config.write(configfile)
+import utils  # Import the external utility file
 
 # Define parameters
 configfile: "config.yaml"
 
-# Top-level rule to encompass the entire workflow
 rule all:
     input:
         config["rule_collect_papers"]["output_path"],
         config["rule_process_papers"]["output_path"],
         config["rule_generate_word2vec"]["model_path"],
 
-
 rule collect_papers:
     output:
         config["rule_collect_papers"]["output_path"]
+    log:
+        "logs/collect_papers.log"  # Log file for this rule
     params:
         config_path=config["rule_collect_papers"]["config_path"],
         keywords=config["rule_collect_papers"]["keywords"],
@@ -57,13 +22,11 @@ rule collect_papers:
         openaccess=config["rule_collect_papers"]["openaccess"],
         output_path=config["rule_collect_papers"]["output_path"]
     run:
-        # Update the pybliometrics.cfg file at the given config_path, or create it if it doesn't exist
-        update_pybliometrics_config(params.config_path, config["pybliometrics_config"])
+        # Call the external function
+        utils.update_pybliometrics_config(params.config_path, config["pybliometrics_config"])
 
-        # Construct the command with an optional startyear argument
         startyear_cmd = f"--startyear {params.startyear}" if params.startyear else ""
 
-        # Run the paper collection script using the updated or newly created pybliometrics.cfg file
         shell("""
             set -x
             python script/collect_papers.py \
@@ -72,8 +35,9 @@ rule collect_papers:
                 {startyear_cmd} \
                 --endyear {params.endyear} \
                 --openaccess {params.openaccess} \
-                --output_path "{params.output_path}"
+                --output_path "{params.output_path}" > {log} 2>&1  # Redirect output to log
         """)
+
 
 
 # Rule to process collected papers
@@ -82,6 +46,8 @@ rule process_papers:
         config["rule_collect_papers"]["output_path"]
     output:
         config["rule_process_papers"]["output_path"]
+    log:
+        "logs/process_papers.log"
     params:
         input_path=config["rule_process_papers"]["input_path"],
         output_path=config["rule_process_papers"]["output_path"]
@@ -89,7 +55,7 @@ rule process_papers:
         """
         python script/process_papers.py \
             --input_path "{params.input_path}" \
-            --output_path "{params.output_path}"
+            --output_path "{params.output_path}" > {log} 2>&1  # Redirect output to log
         """
 
 # Rule to generate word2vec model
@@ -98,6 +64,8 @@ rule generate_word2vec:
         config["rule_process_papers"]["output_path"]
     output:
         config["rule_generate_word2vec"]["model_path"]
+    log:
+        "logs/generate_word2vec.log"
     params:
         input_path=config["rule_generate_word2vec"]["input_path"],
         model_path=config["rule_generate_word2vec"]["model_path"],
@@ -117,6 +85,6 @@ rule generate_word2vec:
             --hs {params.hs} \
             --window {params.window} \
             --min_count {params.min_count} \
-            --workers {params.workers}
+            --workers {params.workers} > {log} 2>&1  # Redirect output to log
         """
 
