@@ -3,31 +3,7 @@
 
 This repository contains the code and workflow for the paper **"Composition-property extrapolation for compositionally complex solid solutions based on word embeddings: efficient materials discovery"**, submitted to *Digital Discovery*. With this workflow, the abstract collection, model building, figure and table generation, can be reproduced.
 
-## Repository Structure
-
-```plaintext
-digital_discovery_workflow/
-├── figures/
-│   ├── script/
-│   ├── __init__.py
-│   ├── config.yaml
-│   └── Snakefile
-├── prediction_models/
-│   ├── script/
-│   ├── __init__.py
-│   ├── config.yaml
-│   └── Snakefile
-├── tables/
-│   ├── script/
-│   ├── __init__.py
-│   ├── config.yaml
-│   └── Snakefile
-├── word2vec_model/
-│   ├── script/
-│   ├── __init__.py
-│   ├── config.yaml
-│   └── Snakefile
-```
+## Workflow
 
 ### 1. **Word2Vec Model**
 
