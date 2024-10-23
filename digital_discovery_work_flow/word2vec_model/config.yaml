@@ -66,4 +66,3 @@ rule_generate_word2vec:
   min_count: 1
   # Number of worker threads to train the model
   workers: 4
-
