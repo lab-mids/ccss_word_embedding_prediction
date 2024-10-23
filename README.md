@@ -91,7 +91,24 @@ Note, we had issues with pulp versions > 2.6.0 and therefore suggest to explicit
    cd digital_discovery_workflow
    ```
 
-2. Install required packages:
+2. Install environment and required packages:
+   Create and activate a conda environment
+   ```bash
+   conda create --name embedding_prediction python=3.10
+   conda activate embedding_prediction
+   ```
+
+   Install pulp with specific version
+   ```bash
+   pip install pulp==2.6.0
+   ```
+
+   Install snakemake
+   ```bash
+   pip install snakemake
+   ```
+
+   Install the rest of the dependencies as well as explicitly download the trained pipeline for English
    ```bash
    pip install -r requirements.txt
    python -m spacy download en_core_web_sm
