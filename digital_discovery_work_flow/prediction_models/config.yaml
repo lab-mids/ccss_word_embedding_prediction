@@ -13,17 +13,17 @@ rule_predict_gpy_model:
 
   # List of training file paths (CSV files containing training data)
   train_files:
-    - "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Ru.csv"
-    - "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt.csv"
+    - "path/to/your/Ag_Pd_Ru.csv"
+    - "path/to/your/Ag_Pd_Pt.csv"
 
   # Path to the test file (CSV file containing the test data)
-  test_file: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt_Ru.csv"
+  test_file: "path/to/your/Ag_Pd_Pt_Ru.csv"
 
   # Name of the column in the CSV files that represents the target variable to predict
   target_column: "Current_at_850mV"
 
   # Output file path where the predictions will be saved
-  output_file: "Ag-Pd-Pt-Ru_with_predictions_Gpy.csv"
+  output_file: "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
 
 
 # Configuration for training and testing GPy model with material vectors for current density prediction
@@ -32,33 +32,33 @@ rule_predict_gpy_with_vector:
 
   # List of training file paths (CSV files containing training data)
   train_files:
-    - "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Ru.csv"
-    - "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt.csv"
+    - "path/to/your/Ag_Pd_Ru.csv"
+    - "path/to/your/Ag_Pd_Pt.csv"
 
   # Path to the test file (CSV file containing the test data)
-  test_file: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt_Ru.csv"
+  test_file: "path/to/your/Ag_Pd_Pt_Ru.csv"
 
   # Path to the Word2Vec model for material vector computation
-  model_path: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/repo/ccss_word_embedding_prediction/digital_discovery_work_flow/word2vec_model/HEA_electrocatalyst.model"
+  model_path: "path/to/your/HEA_electrocatalyst.model"
 
   # Name of the column in the CSV files that represents the target variable to predict
   target_column: "Current_at_850mV"
 
   # Output file path where the predictions will be saved
-  output_file: "Ag-Pd-Pt-Ru_with_predictions_Gpy_with_embedding.csv"
+  output_file: "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
 
 # Configuration for optimizing weights of properties and obtaining a standard vector
 
 rule_standard_vector_method:
 
   # Path to the Word2Vec model used for material vector computation
-  model_path: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/repo/ccss_word_embedding_prediction/digital_discovery_work_flow/word2vec_model/HEA_electrocatalyst.model"
+  model_path: "path/to/your/HEA_electrocatalyst.model"
 
   # List of dataset file paths (CSV files containing material data)
   data_paths:
-    - "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Ru.csv"
-    - "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt.csv"
-    - "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt_Ru.csv"
+    - "path/to/your/Ag_Pd_Ru.csv"
+    - "path/to/your/Ag_Pd_Pt.csv"
+    - "path/to/your/Ag_Pd_Pt_Ru.csv"
 
   # List of properties to be used for optimization
   property_list:
@@ -81,7 +81,7 @@ rule_standard_vector_method:
     - "surface morphology"
 
   # Output file path where the optimization results will be saved
-  output_file: "optimization_results.csv"
+  output_file: "path/to/your/optimization_results.csv"
 
 
 # Configuration for prediction using the standard vector method
@@ -89,16 +89,16 @@ rule_standard_vector_method:
 rule_predict_with_standard_vector:
 
   # Path to the Word2Vec model used for material vector computation
-  model_path: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/repo/ccss_word_embedding_prediction/digital_discovery_work_flow/word2vec_model/HEA_electrocatalyst.model"
+  model_path: "path/to/your/HEA_electrocatalyst.model"
 
   # List of dataset file paths (CSV files containing material data)
   data_paths:
-    - "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Ru.csv"
-    - "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt.csv"
-    - "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt_Ru.csv"
+    - "path/to/your/Ag_Pd_Ru.csv"
+    - "path/to/your/Ag_Pd_Pt.csv"
+    - "path/to/your/Ag_Pd_Pt_Ru.csv"
 
   # Path to the optimization results file (CSV)
-  results_path: "optimization_results.csv"
+  results_path: "path/to/your/optimization_results.csv"
 
   # List of properties used for the similarity calculation
   property_list:
@@ -128,4 +128,4 @@ rule_predict_with_standard_vector:
     - "Pt"
 
   # Output file path where the similarity results will be saved
-  output_file: "Ag-Pd-Pt-Ru_with_predictions_Standard_Vec.csv"
+  output_file: "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
