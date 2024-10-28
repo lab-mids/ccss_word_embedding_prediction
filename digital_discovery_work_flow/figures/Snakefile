@@ -13,11 +13,12 @@ rule all:
         config["rule_plot_Ag_Pd_Pt_dataset_elements"]["output_path"],
         config["rule_plot_Ag_Pd_Pt_Ru_dataset_elements"]["output_path"],
         config["rule_plot_quaternary_current_with_predictions"]["output_path"],
-        config["rule_plot_correlation"]["output_file"]
+        config["rule_plot_correlation"]["output_file"],
+        config["rule_integrated_density_plot"]["output_file"]
 
 rule visualize_material_vectors:
     input:
-        model=config["rule_visualize_material_vectors"]["model_path"]
+        model=config["HEA_model"]
     output:
         plot=config["rule_visualize_material_vectors"]["output_path"]
     log:
@@ -53,9 +54,9 @@ rule visualize_material_vectors:
 # Snakefile for generating an element concentration plot
 rule generate_element_concentration_plot:
     input:
-        data1=config["rule_generate_element_concentration_plot"]["data1"],
-        data2=config["rule_generate_element_concentration_plot"]["data2"],
-        data3=config["rule_generate_element_concentration_plot"]["data3"]
+        data1=config["Ag_Pd_Ru"],
+        data2=config["Ag_Pd_Pt"],
+        data3=config["Ag_Pd_Pt_Ru"]
     output:
         plot=config["rule_generate_element_concentration_plot"]["output"]
     log:
@@ -72,7 +73,7 @@ rule generate_element_concentration_plot:
 # Snakefile for plotting current density at 850mV
 rule plot_current_density:
     input:
-        data_paths=config["rule_plot_current_density"]["data_paths"]
+        data_paths=[config["Ag_Pd_Ru"], config["Ag_Pd_Pt"], config["Ag_Pd_Pt_Ru"]]
     output:
         plot=config["rule_plot_current_density"]["output_path"]
     log:
@@ -90,7 +91,7 @@ rule plot_current_density:
 # Snakefile for plotting stacked step histogram
 rule plot_stacked_step_histogram:
     input:
-        data_paths=config["rule_plot_stacked_step_histogram"]["data_paths"]
+        data_paths=[config["Ag_Pd_Ru"], config["Ag_Pd_Pt"], config["Ag_Pd_Pt_Ru"]]
     output:
         plot=config["rule_plot_stacked_step_histogram"]["output_path"]
     log:
@@ -114,7 +115,7 @@ rule plot_stacked_step_histogram:
 # Rule for generating "Ag-Pd-Ru_dataset_elements.pdf"
 rule plot_Ag_Pd_Ru_dataset_elements:
     input:
-        data_paths=config["rule_plot_Ag_Pd_Ru_dataset_elements"]["data_paths"]
+        data_paths=config["Ag_Pd_Ru"]
     output:
         plot=config["rule_plot_Ag_Pd_Ru_dataset_elements"]["output_path"]
     log:
@@ -142,7 +143,7 @@ rule plot_Ag_Pd_Ru_dataset_elements:
 # Rule for generating "ternary_datasets_current.pdf"
 rule plot_ternary_datasets_current:
     input:
-        data_paths=config["rule_plot_ternary_datasets_current"]["data_paths"]
+        data_paths=[config["Ag_Pd_Ru"], config["Ag_Pd_Pt"]]
     output:
         plot=config["rule_plot_ternary_datasets_current"]["output_path"]
     log:
@@ -174,7 +175,7 @@ rule plot_ternary_datasets_current:
 # Rule for generating "Ag-Pd-Pt_dataset_elements.pdf"
 rule plot_Ag_Pd_Pt_dataset_elements:
     input:
-        data_paths=config["rule_plot_Ag_Pd_Pt_dataset_elements"]["data_paths"]
+        data_paths=config["Ag_Pd_Pt"]
     output:
         plot=config["rule_plot_Ag_Pd_Pt_dataset_elements"]["output_path"]
     log:
@@ -202,7 +203,7 @@ rule plot_Ag_Pd_Pt_dataset_elements:
 # Rule for generating "Ag-Pd-Pt-Ru_dataset_elements.pdf"
 rule plot_Ag_Pd_Pt_Ru_dataset_elements:
     input:
-        data_paths=config["rule_plot_Ag_Pd_Pt_Ru_dataset_elements"]["data_paths"]
+        data_paths=config["Ag_Pd_Pt_Ru"]
     output:
         plot=config["rule_plot_Ag_Pd_Pt_Ru_dataset_elements"]["output_path"]
     log:
@@ -229,7 +230,8 @@ rule plot_Ag_Pd_Pt_Ru_dataset_elements:
 
 rule plot_quaternary_current_with_predictions:
     input:
-        data_paths=config["rule_plot_quaternary_current_with_predictions"]["data_paths"]
+        data_paths=[config["prediction_gpy"], config["prediction_gpy_embedding"],
+                    config["prediction_standard_vec"]]
     output:
         plot=config["rule_plot_quaternary_current_with_predictions"]["output_path"]
     log:
@@ -263,7 +265,8 @@ rule plot_quaternary_current_with_predictions:
 
 rule plot_correlation:
     input:
-        data_paths=config["rule_plot_correlation"]["data_paths"]
+        data_paths=[config["prediction_gpy"], config["prediction_gpy_embedding"],
+                    config["prediction_standard_vec"]]
     output:
         output_file=config["rule_plot_correlation"]["output_file"]
     log:
@@ -292,9 +295,12 @@ rule plot_correlation:
 # Rule to load data, initialize class, and plot the results
 rule integrated_density_plot:
     input:
-        filepaths=config["rule_integrated_density_plot"]["filepaths"]  # List of CSV file paths
+        filepaths=[config["Ag_Pd_Pt_Ru"],config["Ag_Pd_Pt_Ru"],
+                   config["prediction_gpy"], config["prediction_gpy_embedding"],
+                   config["prediction_standard_vec"]]  # List of CSV file paths
     output:
-        pdf=config["rule_integrated_density_plot"]["output_file"]  # Output PDF file
+        output_file=config["rule_integrated_density_plot"]["output_file"]  # Output PDF
+    # file
     log:
         "logs/integrated_density_plot.log"  # Log file for integrated_density_plot rule
     params:
@@ -314,5 +320,5 @@ rule integrated_density_plot:
             --fontsize {params.fontsize} \
             --subplot_width {params.subplot_width} \
             --subplot_height {params.subplot_height} \
-            --output {output.pdf} > {log} 2>&1
+            --output {output.output_file} > {log} 2>&1
         """

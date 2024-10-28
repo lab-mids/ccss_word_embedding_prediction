@@ -1,19 +1,22 @@
-# Configuration file for Snakemake workflow
+# Centralized file paths and parameters (for paths used in multiple rules)
+
+Ag_Pd_Ru: "Ag_Pd_Ru.csv"
+Ag_Pd_Pt: "Ag_Pd_Pt.csv"
+Ag_Pd_Pt_Ru: "Ag_Pd_Pt_Ru.csv"
+HEA_model: "/Users/leizhang/Documents/model/HEA_electrocatalyst.model"
+prediction_gpy: "Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
+prediction_gpy_embedding: "Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
+prediction_standard_vec: "Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
 
 # Configuration for Visualizing Material Vectors
 rule_visualize_material_vectors:
-  # Path to the Word2Vec model
-  model_path: "path/to/your/HEA_electrocatalyst.model"
-
   # Output path for the generated plot PDF
-  output_path: "path/to/property_best_electrocatalysts_vectors.pdf"
-
+  output_path: "path/to/your/property_best_electrocatalysts_vectors.pdf"
   # List of materials to visualize
   material_list:
     - "Ru0Pd0.86Ag0.14"
     - "Pd0.3Ag0.31Pt0.39"
     - "Ru0.14Pd0.23Ag0.09Pt0.53"
-
   # List of properties to include in the visualization
   property_list:
     - "electrocatalyst"
@@ -33,7 +36,6 @@ rule_visualize_material_vectors:
     - "electronegativity"
     - "crystal structure"
     - "surface morphology"
-
   # Visualization parameters
   marker_size: 25
   axisfont_size: 25
@@ -44,75 +46,52 @@ rule_visualize_material_vectors:
   textfont_size: 25
 
 # Configuration for ElementConcentrationPlotter
-rule_generate_element_concentration_plot:
-  # Paths to dataset CSV files
-  data1: "path/to/your/Ag_Pd_Ru.csv"
-  data2: "path/to/your/Ag_Pd_Pt.csv"
-  data3: "path/to/your/Ag_Pd_Pt_Ru.csv"
 
+rule_generate_element_concentration_plot:
   # Output path for the plot PDF file
-  output: "path/to/element_concentration_horizontal_range_plot.pdf"
+  output: "path/to/your/element_concentration_horizontal_range_plot.pdf"
 
 # Configuration for plotting current density at 850mV
-rule_plot_current_density:
-  # Paths to the CSV files containing data
-  data_paths:
-    - "path/to/your/Ag_Pd_Ru.csv"
-    - "path/to/your/Ag_Pd_Pt.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru.csv"
 
+rule_plot_current_density:
   # Names of the systems corresponding to the data files
   system_names:
     - "Ag-Pd-Ru"
     - "Ag-Pd-Pt"
     - "Ag-Pd-Pt-Ru"
-
   # Output path for the plot PDF
   output_path: "path/to/your/current_density_horizontal_range_plot.pdf"
 
 # Configuration for plotting stacked step histogram
-rule_plot_stacked_step_histogram:
-  # Paths to the CSV files containing data
-  data_paths:
-    - "path/to/your/Ag_Pd_Ru.csv"
-    - "path/to/your/Ag_Pd_Pt.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru.csv"
 
+rule_plot_stacked_step_histogram:
   # Names of the systems corresponding to the data files
   system_names:
     - "Ag-Pd-Ru"
     - "Ag-Pd-Pt"
     - "Ag-Pd-Pt-Ru"
-
   # Output path for the plot PDF
-  output_path: "path/to/current_density_stacked_step_histogram.pdf"
-
+  output_path: "path/to/your/current_density_stacked_step_histogram.pdf"
   # Number of bins for the histogram
   bins: 10
-
   # Column name for the data to be plotted
   column_name: "Current_at_850mV"
 
-# Configuration for plotting similarity scatter figures
-
 # Configuration for "Ag_Pd_Ru_dataset_elements.pdf"
+
 rule_plot_Ag_Pd_Ru_dataset_elements:
-  data_paths:
-    - "Ag_Pd_Ru.csv"
   elements:
     - "data1:Ag,Pd,Ru"
   x_labels: ["Ag", "Pd", "Ru"]
   y_labels: ["Ag", "Pd", "Ru"]
-  output_path: "path/to/Ag_Pd_Ru_dataset_elements.pdf"
+  output_path: "path/to/your/Ag_Pd_Ru_dataset_elements.pdf"
   ncols: 3
   nrows: 1
   subplot_labels: false
 
 # Configuration for "ternary_datasets_current.pdf"
+
 rule_plot_ternary_datasets_current:
-  data_paths:
-    - "path/to/your/Ag_Pd_Ru.csv"
-    - "path/to/your/Ag_Pd_Pt.csv"
   elements:
     - "data1:Current_at_850mV"
     - "data2:Current_at_850mV"
@@ -120,43 +99,38 @@ rule_plot_ternary_datasets_current:
   y_labels: ["Current_at_850mV"]
   legend_labels: "{\"mA/cm²\": [\"Current_at_850mV\"]}"
   cmap_groups: "{\"plasma\": [\"Current_at_850mV\"]}"
-  output_path: "path/to/ternary_datasets_current.pdf"
+  output_path: "path/to/your/ternary_datasets_current.pdf"
   ncols: 2
   nrows: 1
   subplot_labels: true
 
 # Configuration for "Ag_Pd_Pt_dataset_elements.pdf"
+
 rule_plot_Ag_Pd_Pt_dataset_elements:
-  data_paths:
-    - "path/to/your/Ag_Pd_Pt.csv"
   elements:
     - "data1:Ag,Pd,Pt"
   x_labels: ["Ag", "Pd", "Pt"]
   y_labels: ["Ag", "Pd", "Pt"]
-  output_path: "path/to/Ag_Pd_Pt_dataset_elements.pdf"
+  output_path: "path/to/your/Ag_Pd_Pt_dataset_elements.pdf"
   ncols: 3
   nrows: 1
   subplot_labels: false
 
 # Configuration for "Ag_Pd_Pt_Ru_dataset_elements.pdf"
+
 rule_plot_Ag_Pd_Pt_Ru_dataset_elements:
-  data_paths:
-    - "path/to/your/Ag_Pd_Pt_Ru.csv"
   elements:
     - "data1:Ag,Pd,Pt,Ru"
   x_labels: ["Ag", "Pd", "Pt", "Ru"]
   y_labels: ["Ag", "Pd", "Pt", "Ru"]
-  output_path: "path/to/Ag_Pd_Pt_Ru_dataset_elements.pdf"
+  output_path: "path/to/your/Ag_Pd_Pt_Ru_dataset_elements.pdf"
   ncols: 2
   nrows: 2
   subplot_labels: false
 
 # Configuration for "quaternary_current_with_predictions.pdf"
+
 rule_plot_quaternary_current_with_predictions:
-  data_paths:
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
   elements:
     - "data1:Current_at_850mV,Predicted_Value"
     - "data2:Predicted_Value"
@@ -173,54 +147,33 @@ rule_plot_quaternary_current_with_predictions:
 # Configuration for plotting correlation with optional filtering and fit line
 
 rule_plot_correlation:
-  # List of dataset file paths (CSV files containing the data)
-  data_paths:
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
-
   # List of names corresponding to each dataset
   names:
     - "Gpy_Model"
     - "Gpy_Embedding_Enhanced_Model"
     - "Standard_Vec_Model"
-
   # Name of the column for the X-axis
   x_col: "Current_at_850mV"
-
   # Name of the column for the Y-axis
   y_col: "Predicted_Value"
-
   # Combined plot or separate plots
   combined: True  # Use Python-style True
-
   # Show fit line on the plots
   show_fit_line: True  # Use Python-style True
-
   # Optional filter for the data (e.g., "Current_at_850mV < -0.2" or "" for no filter)
   filter: ""
-
   # Output file path for saving the plot
   output_file: "path/to/your/correlation_plot.pdf"
 
-
+# Configuration for plotting integrated density plot
 rule_integrated_density_plot:
-  # List of CSV file paths to be processed
-  filepaths:
-    - "path/to/your/Ag_Pd_Pt_Ru.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
-
   # List of column names to be used for color-coding each file
   columns:
     - 'Current_at_850mV'
     - 'Current_at_850mV'
-    - 'Current_at_850mV'
-    - 'Current_at_850mV'
+    - 'Predicted_Value'
+    - 'Predicted_Value'
     - 'Similarity'
-
   # Plot types for each file (either 'xy' for a regular plot or 'x_only' for a combined x plot)
   plot_types:
     - 'xy'
@@ -228,22 +181,17 @@ rule_integrated_density_plot:
     - 'x_only'
     - 'x_only'
     - 'x_only'
-
   # Custom legend labels for x_only plots
   legend_labels:
-    - 'Experimental'
-    - 'Model 1'
-    - 'Model 2'
-    - 'Model 3'
-
+    - "\"Experimental\""
+    - "\"Model 1\""
+    - "\"Model 2\""
+    - "\"Model 3\""
   # Font size for all text elements
   fontsize: 16
-
   # Width of each subplot in inches
   subplot_width: 7
-
   # Height of each subplot in inches
   subplot_height: 5
-
   # Path to save the output PDF
-  output_file: "path/to/save/IntegratedDensityCombinedXPlot.pdf"
+  output_file: "path/to/your/IntegratedDensityCombinedXPlot.pdf"

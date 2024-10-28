@@ -6,36 +6,33 @@ rule all:
     input:
         config["rule_predict_gpy_model"]["output_file"],
         config["rule_predict_gpy_with_vector"]["output_file"],
-        config["rule_standard_vector_method"]["output_file"],
-        config["rule_predict_with_standard_vector"]["output_file"]
+        config["optimization_results"],
+        config["rule_predict_with_standard_vector"]["output_file"],
+        "logs/predicted_value_added.log"
+
+
 
 # Rule for training GPy model and making predictions
 rule predict_gpy_model:
     input:
-        ag_pd_ru = config["ag_pd_ru_file"],
-        ag_pd_pt = config["ag_pd_pt_file"],
-        test_file = config["ag_pd_pt_ru_file"]
+        filenames=[config["Ag_Pd_Ru"], config["Ag_Pd_Pt"], config["Ag_Pd_Pt_Ru"]],
     output:
         output_file=config["rule_predict_gpy_model"]["output_file"]
-    log:
-        "logs/predict_gpy_model.log"  # Log file for predict_gpy_model rule
     params:
         target_column=config["target_column"]
     shell:
         """
         python script/predict_gpy_model.py \
-            --train_files {input.train_files} \
-            --test_file {input.ag_pd_ru} {input.ag_pd_pt} \
+            --filenames {input.filenames} \
             --target_column {params.target_column} \
-            --output_file {output.output_file} > {log} 2>&1
+            --output_file {output.output_file}
         """
 
 # Rule for training GPy model with material vectors and making predictions
 rule predict_gpy_with_vector:
     input:
-        train_files=config["train_files"],
-        test_file=config["test_file"],
-        model_path=config["rule_predict_gpy_with_vector"]["model_path"]
+        filenames=[config["Ag_Pd_Ru"], config["Ag_Pd_Pt"], config["Ag_Pd_Pt_Ru"]],
+        model_path=config["HEA_model"]
     output:
         output_file=config["rule_predict_gpy_with_vector"]["output_file"]
     log:
@@ -45,8 +42,7 @@ rule predict_gpy_with_vector:
     shell:
         """
         python script/predict_gpy_with_vector.py \
-            --train_files {input.train_files} \
-            --test_file {input.test_file} \
+            --filenames {input.filenames} \
             --model_path {input.model_path} \
             --target_column {params.target_column} \
             --output_file {output.output_file} > {log} 2>&1
@@ -55,14 +51,14 @@ rule predict_gpy_with_vector:
 # Rule for optimizing property weights and obtaining a standard vector
 rule standard_vector_method:
     input:
-        model_path=config["rule_standard_vector_method"]["model_path"],
-        data_paths=config["rule_standard_vector_method"]["data_paths"]
+        model_path=config["HEA_model"],
+        data_paths=[config["Ag_Pd_Ru"], config["Ag_Pd_Pt"], config["Ag_Pd_Pt_Ru"]]
     output:
-        output_file=config["rule_standard_vector_method"]["output_file"]
+        output_file=config["optimization_results"]
     log:
         "logs/standard_vector_method.log"  # Log file for standard_vector_method rule
     params:
-        property_list=config["rule_standard_vector_method"]["property_list"]
+        property_list=config["property_list"]
     shell:
         """
         python script/standard_vector_method.py \
@@ -75,15 +71,15 @@ rule standard_vector_method:
 # Rule for prediction using the standard vector method
 rule predict_with_standard_vector:
     input:
-        model_path=config["rule_predict_with_standard_vector"]["model_path"],
-        data_paths=config["rule_predict_with_standard_vector"]["data_paths"],
-        results_path=config["rule_predict_with_standard_vector"]["results_path"]
+        model_path=config["HEA_model"],
+        data_paths=[config["Ag_Pd_Ru"], config["Ag_Pd_Pt"], config["Ag_Pd_Pt_Ru"]],
+        results_path=config["optimization_results"]
     output:
         output_file=config["rule_predict_with_standard_vector"]["output_file"]
     log:
         "logs/predict_with_standard_vector.log"  # Log file for predict_with_standard_vector rule
     params:
-        property_list=config["rule_predict_with_standard_vector"]["property_list"],
+        property_list=config["property_list"],
         elements=config["rule_predict_with_standard_vector"]["elements"]
     shell:
         """
@@ -94,4 +90,20 @@ rule predict_with_standard_vector:
             --property_list {params.property_list} \
             --elements {params.elements} \
             --output_file {output.output_file} > {log} 2>&1
+        """
+
+# Rule to add Predicted_Value column directly in the specified output files
+rule add_predicted_value:
+    input:
+        gpy_model=config["rule_predict_gpy_model"]["output_file"],
+        gpy_vector=config["rule_predict_gpy_with_vector"]["output_file"],
+        standard_vector=config["rule_predict_with_standard_vector"]["output_file"]
+    output:
+        touch("logs/predicted_value_added.log")  # Just to signify the completion
+    shell:
+        """
+        python script/add_predicted_value.py --input_file {input.gpy_model} --source_column 'Predicted_Current_at_850mV'
+        python script/add_predicted_value.py --input_file {input.gpy_vector} --source_column 'Predicted_Current_at_850mV'
+        python script/add_predicted_value.py --input_file {input.standard_vector} --source_column 'Similarity'
+        echo "Predicted_Value added successfully" > {output}
         """

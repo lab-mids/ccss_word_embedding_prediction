@@ -1,131 +1,51 @@
-# Configuration for training and testing GPy model for current density prediction
-# List of training file paths (CSV files containing training data)
+# Centralized file paths and parameters
 
-ag_pd_ru_file: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Ru.csv"
-
-ag_pd_pt_file: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt.csv"
-
-ag_pd_pt_ru_file: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt_Ru.csv"
-
+Ag_Pd_Ru: "Ag_Pd_Ru.csv"
+Ag_Pd_Pt: "Ag_Pd_Pt.csv"
+Ag_Pd_Pt_Ru: "Ag_Pd_Pt_Ru.csv"
+HEA_model: "/Users/leizhang/Documents/model/HEA_electrocatalyst.model"
+optimization_results: "path/to/your/optimization_results.csv"
 target_column: "Current_at_850mV"
+property_list:
+  - "electrocatalyst"
+  - "overpotential"
+  - "tafel slope"
+  - "exchange current density"
+  - "stability"
+  - "durability"
+  - "surface area"
+  - "active site"
+  - "turnover frequency"
+  - "electrocatalytic activity"
+  - "faradaic efficiency"
+  - "charge transfer"
+  - "adsorption energy"
+  - "electronic structure"
+  - "electronegativity"
+  - "crystal structure"
+  - "surface morphology"
+
+# Configuration for training and testing GPy model for current density prediction
 
 rule_predict_gpy_model:
-
-  # List of training file paths (CSV files containing training data)
-  train_files:
-    - "path/to/your/Ag_Pd_Ru.csv"
-    - "path/to/your/Ag_Pd_Pt.csv"
-
-  # Path to the test file (CSV file containing the test data)
-  test_file: "path/to/your/Ag_Pd_Pt_Ru.csv"
-
-  # Name of the column in the CSV files that represents the target variable to predict
-  target_column: "Current_at_850mV"
-
   # Output file path where the predictions will be saved
   output_file: "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
-
 
 # Configuration for training and testing GPy model with material vectors for current density prediction
 
 rule_predict_gpy_with_vector:
-
-  # List of training file paths (CSV files containing training data)
-  train_files:
-    - "path/to/your/Ag_Pd_Ru.csv"
-    - "path/to/your/Ag_Pd_Pt.csv"
-
-  # Path to the test file (CSV file containing the test data)
-  test_file: "path/to/your/Ag_Pd_Pt_Ru.csv"
-
-  # Path to the Word2Vec model for material vector computation
-  model_path: "path/to/your/HEA_electrocatalyst.model"
-
-  # Name of the column in the CSV files that represents the target variable to predict
-  target_column: "Current_at_850mV"
-
   # Output file path where the predictions will be saved
   output_file: "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
-
-# Configuration for optimizing weights of properties and obtaining a standard vector
-
-rule_standard_vector_method:
-
-  # Path to the Word2Vec model used for material vector computation
-  model_path: "path/to/your/HEA_electrocatalyst.model"
-
-  # List of dataset file paths (CSV files containing material data)
-  data_paths:
-    - "path/to/your/Ag_Pd_Ru.csv"
-    - "path/to/your/Ag_Pd_Pt.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru.csv"
-
-  # List of properties to be used for optimization
-  property_list:
-    - "electrocatalyst"
-    - "overpotential"
-    - "tafel slope"
-    - "exchange current density"
-    - "stability"
-    - "durability"
-    - "surface area"
-    - "active site"
-#    - "turnover frequency"
-    - "electrocatalytic activity"
-#    - "faradaic efficiency"
-    - "charge transfer"
-    - "adsorption energy"
-    - "electronic structure"
-    - "electronegativity"
-    - "crystal structure"
-    - "surface morphology"
-
-  # Output file path where the optimization results will be saved
-  output_file: "path/to/your/optimization_results.csv"
-
 
 # Configuration for prediction using the standard vector method
 
 rule_predict_with_standard_vector:
-
-  # Path to the Word2Vec model used for material vector computation
-  model_path: "path/to/your/HEA_electrocatalyst.model"
-
-  # List of dataset file paths (CSV files containing material data)
-  data_paths:
-    - "path/to/your/Ag_Pd_Ru.csv"
-    - "path/to/your/Ag_Pd_Pt.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru.csv"
-
-  # Path to the optimization results file (CSV)
-  results_path: "path/to/your/optimization_results.csv"
-
-  # List of properties used for the similarity calculation
-  property_list:
-    - "electrocatalyst"
-    - "overpotential"
-    - "tafel slope"
-    - "exchange current density"
-    - "stability"
-    - "durability"
-    - "surface area"
-    - "active site"
-#    - "turnover frequency"
-    - "electrocatalytic activity"
-#    - "faradaic efficiency"
-    - "charge transfer"
-    - "adsorption energy"
-    - "electronic structure"
-    - "electronegativity"
-    - "crystal structure"
-    - "surface morphology"
-
   # List of elements to use for similarity calculation
   elements:
     - "Ru"
     - "Pd"
     - "Ag"
     - "Pt"
-
   # Output file path where the similarity results will be saved
   output_file: "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
+

@@ -1,10 +1,11 @@
+# Centralized file paths and parameters
+Ag_Pd_Ru: "Ag_Pd_Ru.csv"
+Ag_Pd_Pt: "Ag_Pd_Pt.csv"
+Ag_Pd_Pt_Ru: "Ag_Pd_Pt_Ru.csv"
+
 # Configuration for calculating concentration statistics
 
 rule_calculate_concentration_stats:
-  filepaths:
-    - "path/to/your/Ag_Pd_Pt.csv"
-    - "path/to/your/Ag_Pd_Ru.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru.csv"
   output_paths:
     - "path/to/your/stats_Ag_Pd_Pt.csv"
     - "path/to/your/stats_Ag_Pd_Ru.csv"
@@ -14,49 +15,33 @@ rule_calculate_concentration_stats:
 # Configuration for calculating current density statistics
 
 rule_calculate_current_density_stats:
-
-  # List of input file paths for CSV files containing current density data
-  filepaths:
-    - "path/to/your/Ag_Pd_Ru.csv"
-    - "path/to/your/Ag_Pd_Pt.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru.csv"
-
   # Name of the column in the CSV files that represents current density (e.g., 'Current_at_850mV')
   target_column: "Current_at_850mV"
-
   # Output file path for the results (a CSV file containing calculated statistics)
   output_path: "path/to/your/current_density_stats.csv"
 
 # Configuration for analyzing prediction metrics
 
 rule_analyze_predictions:
-
   # List of dataset file paths (CSV files containing the data)
   data_paths:
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
-    - "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
-
+    - "Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
+    - "Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
+    - "Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
   # List of names corresponding to each dataset
   names:
     - "Gpy_Model"
     - "Gpy_Embedding_Enhanced_Model"
     - "Standard_Vec_Model"
-
   # Name of the column for actual values
   actual_col: "Current_at_850mV"
-
   # Name of the column for predicted values
   predicted_col: "Predicted_Value"
-
   # Optional column to apply filtering
   filter_col: "Current_at_850mV"  # Set to null if no filtering is needed
-
   # Value for filtering data (e.g., "< -0.2")
   filter_value: -0.2  # Set to null if no filtering is needed
-
   # Metrics to skip during analysis (optional), e.g., '["r2_score", "mean_absolute_error"]' or '[]'
   metrics_to_skip: '[]'
-
   # Output file path for saving the results
   output_file: "path/to/your/results.csv"
