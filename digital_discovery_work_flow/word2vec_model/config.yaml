@@ -10,7 +10,7 @@ rule_collect_papers:
   # Start year for the paper query, or "" for no start year
   startyear: ""
   # End year for the paper query
-  endyear: 2022
+  endyear: 2023
   # Whether to search for open access papers
   openaccess: true
   # Output path for the collected papers CSV file
