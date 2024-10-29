@@ -1,7 +1,10 @@
-import utils  # Import the external utility file
+# Import the external utility file
+import utils
+
 
 # Define parameters
 configfile: "config.yaml"
+
 
 rule all:
     input:
