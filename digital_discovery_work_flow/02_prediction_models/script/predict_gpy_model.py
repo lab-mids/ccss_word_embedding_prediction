@@ -135,8 +135,10 @@ class MaterialAnalysis:
         for col in element_columns:
             if col not in data.columns:
                 data[col] = 0
-        return data[element_columns + [col for col in data.columns if
-                                       col not in element_columns]]
+        return data[
+            element_columns
+            + [col for col in data.columns if col not in element_columns]
+        ]
 
     def load_and_prepare_datasets(self, filenames):
         datasets = [pd.read_csv(filename) for filename in filenames]
@@ -145,7 +147,9 @@ class MaterialAnalysis:
         standardized_datasets = []
 
         for data in datasets:
-            standardized_data = self.standardize_columns(data, all_element_columns).copy()
+            standardized_data = self.standardize_columns(
+                data, all_element_columns
+            ).copy()
             standardized_datasets.append(standardized_data)
 
         return standardized_datasets
@@ -169,16 +173,29 @@ class MaterialAnalysis:
         gp_model.optimize(messages=False)
 
         Y_pred, _ = gp_model.predict(X_test)
-        test_dataset['Predicted_Current_at_850mV'] = Y_pred.flatten()
+        test_dataset["Predicted_Current_at_850mV"] = Y_pred.flatten()
 
         return test_dataset
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Material Analysis Tool for Training and Testing GP Models.")
-    parser.add_argument("--filenames", nargs='+', required=True, help="List of input CSV files for training.")
-    parser.add_argument("--target_column", default="Current_at_850mV", help="Target column for predictions.")
-    parser.add_argument("--output_file", required=True, help="Output CSV file with predictions.")
+    parser = argparse.ArgumentParser(
+        description="Material Analysis Tool for Training and Testing GP Models."
+    )
+    parser.add_argument(
+        "--filenames",
+        nargs="+",
+        required=True,
+        help="List of input CSV files for training.",
+    )
+    parser.add_argument(
+        "--target_column",
+        default="Current_at_850mV",
+        help="Target column for predictions.",
+    )
+    parser.add_argument(
+        "--output_file", required=True, help="Output CSV file with predictions."
+    )
     args = parser.parse_args()
 
     # Initialize MaterialAnalysis with specified target column
@@ -188,7 +205,9 @@ if __name__ == "__main__":
     datasets = analysis.load_and_prepare_datasets(args.filenames)
 
     # Train on the first N-1 datasets and test on the last dataset
-    trained_data_with_predictions = analysis.train_and_test_model(datasets[:-1], datasets[-1])
+    trained_data_with_predictions = analysis.train_and_test_model(
+        datasets[:-1], datasets[-1]
+    )
 
     # Save the output file with predictions
     trained_data_with_predictions.to_csv(args.output_file, index=False)

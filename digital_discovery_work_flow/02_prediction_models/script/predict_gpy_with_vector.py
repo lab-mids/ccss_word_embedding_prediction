@@ -129,14 +129,20 @@ class MaterialVectorAnalysis:
 
     def compute_material_vector(self, row):
         material_columns = self.detect_material_columns(pd.DataFrame([row]))
-        multiplied_vectors = [self.model.wv[element.lower()] * row[element] for element
-                              in material_columns if element in row]
+        multiplied_vectors = [
+            self.model.wv[element.lower()] * row[element]
+            for element in material_columns
+            if element in row
+        ]
         material_vec = np.mean(multiplied_vectors, axis=0)
         return material_vec
 
     def prepare_data(self, data):
-        data['Material_Vector'] = data.apply(self.compute_material_vector, axis=1)
-        return np.array(data['Material_Vector'].tolist()), data[self.target_column].values[:, None]
+        data["Material_Vector"] = data.apply(self.compute_material_vector, axis=1)
+        return (
+            np.array(data["Material_Vector"].tolist()),
+            data[self.target_column].values[:, None],
+        )
 
     def load_datasets(self, filenames):
         return [pd.read_csv(filename) for filename in filenames]
@@ -161,27 +167,44 @@ class MaterialVectorAnalysis:
 
         Y_pred, _ = gp_model.predict(X_test)
 
-        test_dataset['Predicted_' + self.target_column] = Y_pred.flatten()
+        test_dataset["Predicted_" + self.target_column] = Y_pred.flatten()
 
         return test_dataset
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Material Vector Analysis for Training and Testing GP Models with Word2Vec embeddings.")
-    parser.add_argument("--model_path", required=True, help="Path to the Word2Vec model file.")
-    parser.add_argument("--filenames", nargs='+', required=True, help="List of input CSV files for training and testing.")
-    parser.add_argument("--target_column", required=True, help="Target column for predictions.")
-    parser.add_argument("--output_file", required=True, help="Output CSV file with predictions.")
+    parser = argparse.ArgumentParser(
+        description="Material Vector Analysis for Training and Testing GP Models with Word2Vec embeddings."  # noqa
+    )
+    parser.add_argument(
+        "--model_path", required=True, help="Path to the Word2Vec model file."
+    )
+    parser.add_argument(
+        "--filenames",
+        nargs="+",
+        required=True,
+        help="List of input CSV files for training and testing.",
+    )
+    parser.add_argument(
+        "--target_column", required=True, help="Target column for predictions."
+    )
+    parser.add_argument(
+        "--output_file", required=True, help="Output CSV file with predictions."
+    )
     args = parser.parse_args()
 
     # Initialize the analysis with the Word2Vec model path and target column
-    analysis = MaterialVectorAnalysis(model_path=args.model_path, target_column=args.target_column)
+    analysis = MaterialVectorAnalysis(
+        model_path=args.model_path, target_column=args.target_column
+    )
 
     # Load and prepare datasets
     datasets = analysis.load_datasets(args.filenames)
 
     # Train on the first N-1 datasets and test on the last dataset
-    trained_data_with_predictions = analysis.train_and_test_model(datasets[:-1], datasets[-1])
+    trained_data_with_predictions = analysis.train_and_test_model(
+        datasets[:-1], datasets[-1]
+    )
 
     # Save the output file with predictions
     trained_data_with_predictions.to_csv(args.output_file, index=False)

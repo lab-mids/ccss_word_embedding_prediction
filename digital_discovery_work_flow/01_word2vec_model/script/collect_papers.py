@@ -1,6 +1,7 @@
 import argparse
 from matnexus import PaperCollector as spc
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description="Collect papers from multiple sources")
     parser.add_argument(
