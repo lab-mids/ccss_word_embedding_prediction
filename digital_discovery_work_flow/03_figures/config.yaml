@@ -9,11 +9,11 @@ Ag_Pd_Ru: "/path/to/your/Ag_Pd_Ru.csv"
 Ag_Pd_Pt: "/path/to/your/Ag_Pd_Pt.csv"
 Ag_Pd_Pt_Ru: "/path/to/your/Ag_Pd_Pt_Ru.csv"
 
-HEA_model: "../word2vec_model/HEA_electrocatalyst.model"
+HEA_model: "../01_word2vec_model/HEA_electrocatalyst.model"
 
-prediction_gpy: "../prediction_models/Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
-prediction_gpy_embedding: "../prediction_models/Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
-prediction_standard_vec: "../prediction_models/Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
+prediction_gpy: "../02_prediction_models/Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
+prediction_gpy_embedding: "../02_prediction_models/Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
+prediction_standard_vec: "../02_prediction_models/Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
 
 # Configuration for Visualizing Material Vectors
 rule_visualize_material_vectors:

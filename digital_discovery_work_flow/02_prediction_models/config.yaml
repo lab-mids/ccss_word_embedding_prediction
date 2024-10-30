@@ -9,7 +9,7 @@ Ag_Pd_Ru: "/path/to/your/Ag_Pd_Ru.csv"
 Ag_Pd_Pt: "/path/to/your/Ag_Pd_Pt.csv"
 Ag_Pd_Pt_Ru: "/path/to/your/Ag_Pd_Pt_Ru.csv"
 
-HEA_model: "../word2vec_model/HEA_electrocatalyst.model"
+HEA_model: "../01_word2vec_model/HEA_electrocatalyst.model"
 
 optimization_results: "optimization_results.csv"
 
