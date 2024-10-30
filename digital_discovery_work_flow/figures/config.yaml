@@ -1,17 +1,17 @@
 # Centralized file paths and parameters (for paths used in multiple rules)
 
-Ag_Pd_Ru: "Ag_Pd_Ru.csv"
-Ag_Pd_Pt: "Ag_Pd_Pt.csv"
-Ag_Pd_Pt_Ru: "Ag_Pd_Pt_Ru.csv"
-HEA_model: "/Users/leizhang/Documents/model/HEA_electrocatalyst.model"
-prediction_gpy: "Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
-prediction_gpy_embedding: "Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
-prediction_standard_vec: "Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
+Ag_Pd_Ru: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Ru.csv"
+Ag_Pd_Pt: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt.csv"
+Ag_Pd_Pt_Ru: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt_Ru.csv"
+HEA_model: "../word2vec_model/HEA_electrocatalyst.model"
+prediction_gpy: "../prediction_models/Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
+prediction_gpy_embedding: "../prediction_models/Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
+prediction_standard_vec: "../prediction_models/Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
 
 # Configuration for Visualizing Material Vectors
 rule_visualize_material_vectors:
   # Output path for the generated plot PDF
-  output_path: "path/to/your/property_best_electrocatalysts_vectors.pdf"
+  output_path: "property_best_electrocatalysts_vectors.pdf"
   # List of materials to visualize
   material_list:
     - "Ru0Pd0.86Ag0.14"
@@ -49,7 +49,7 @@ rule_visualize_material_vectors:
 
 rule_generate_element_concentration_plot:
   # Output path for the plot PDF file
-  output: "path/to/your/element_concentration_horizontal_range_plot.pdf"
+  output: "element_concentration_horizontal_range_plot.pdf"
 
 # Configuration for plotting current density at 850mV
 
@@ -60,7 +60,7 @@ rule_plot_current_density:
     - "Ag-Pd-Pt"
     - "Ag-Pd-Pt-Ru"
   # Output path for the plot PDF
-  output_path: "path/to/your/current_density_horizontal_range_plot.pdf"
+  output_path: "current_density_horizontal_range_plot.pdf"
 
 # Configuration for plotting stacked step histogram
 
@@ -71,7 +71,7 @@ rule_plot_stacked_step_histogram:
     - "Ag-Pd-Pt"
     - "Ag-Pd-Pt-Ru"
   # Output path for the plot PDF
-  output_path: "path/to/your/current_density_stacked_step_histogram.pdf"
+  output_path: "current_density_stacked_step_histogram.pdf"
   # Number of bins for the histogram
   bins: 10
   # Column name for the data to be plotted
@@ -99,7 +99,7 @@ rule_plot_ternary_datasets_current:
   y_labels: ["Current_at_850mV"]
   legend_labels: "{\"mA/cm²\": [\"Current_at_850mV\"]}"
   cmap_groups: "{\"plasma\": [\"Current_at_850mV\"]}"
-  output_path: "path/to/your/ternary_datasets_current.pdf"
+  output_path: "ternary_datasets_current.pdf"
   ncols: 2
   nrows: 1
   subplot_labels: true
@@ -111,7 +111,7 @@ rule_plot_Ag_Pd_Pt_dataset_elements:
     - "data1:Ag,Pd,Pt"
   x_labels: ["Ag", "Pd", "Pt"]
   y_labels: ["Ag", "Pd", "Pt"]
-  output_path: "path/to/your/Ag_Pd_Pt_dataset_elements.pdf"
+  output_path: "Ag_Pd_Pt_dataset_elements.pdf"
   ncols: 3
   nrows: 1
   subplot_labels: false
@@ -123,7 +123,7 @@ rule_plot_Ag_Pd_Pt_Ru_dataset_elements:
     - "data1:Ag,Pd,Pt,Ru"
   x_labels: ["Ag", "Pd", "Pt", "Ru"]
   y_labels: ["Ag", "Pd", "Pt", "Ru"]
-  output_path: "path/to/your/Ag_Pd_Pt_Ru_dataset_elements.pdf"
+  output_path: "Ag_Pd_Pt_Ru_dataset_elements.pdf"
   ncols: 2
   nrows: 2
   subplot_labels: false
@@ -139,7 +139,7 @@ rule_plot_quaternary_current_with_predictions:
   y_labels: ["Current_at_850mV", "Predicted_Value", "Similarity"]
   legend_labels: "{\"mA/cm²\": [\"Current_at_850mV\", \"Predicted_Value\"]}"
   cmap_groups: "{\"plasma\": [\"Current_at_850mV\", \"Predicted_Value\", \"Similarity\"]}"
-  output_path: "path/to/your/quaternary_current_with_predictions.pdf"
+  output_path: "quaternary_current_with_predictions.pdf"
   ncols: 2
   nrows: 2
   subplot_labels: true
@@ -163,7 +163,7 @@ rule_plot_correlation:
   # Optional filter for the data (e.g., "Current_at_850mV < -0.2" or "" for no filter)
   filter: ""
   # Output file path for saving the plot
-  output_file: "path/to/your/correlation_plot.pdf"
+  output_file: "correlation_plot.pdf"
 
 # Configuration for plotting integrated density plot
 rule_integrated_density_plot:
@@ -194,4 +194,4 @@ rule_integrated_density_plot:
   # Height of each subplot in inches
   subplot_height: 5
   # Path to save the output PDF
-  output_file: "path/to/your/IntegratedDensityCombinedXPlot.pdf"
+  output_file: "IntegratedDensityCombinedXPlot.pdf"

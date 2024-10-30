@@ -1,11 +1,17 @@
-# Centralized file paths and parameters
+# File paths and parameters
 
-Ag_Pd_Ru: "Ag_Pd_Ru.csv"
-Ag_Pd_Pt: "Ag_Pd_Pt.csv"
-Ag_Pd_Pt_Ru: "Ag_Pd_Pt_Ru.csv"
-HEA_model: "/Users/leizhang/Documents/model/HEA_electrocatalyst.model"
-optimization_results: "path/to/your/optimization_results.csv"
+# Data for publication from
+# Banko, L., Krysiak, O., Schumann, W., & Ludwig, A. (2024).
+# Electrochemical activity of several compositions in the system Ag-Pd-Pt-Ru for the oxygen reduction reaction in 0.05 M KOH solution pH 12.5 [Data set].
+# Zenodo. https://doi.org/10.5281/zenodo.13992986
+
+Ag_Pd_Ru: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Ru.csv"
+Ag_Pd_Pt: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt.csv"
+Ag_Pd_Pt_Ru: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt_Ru.csv"
+HEA_model: "../word2vec_model/HEA_electrocatalyst.model"
+optimization_results: "optimization_results.csv"
 target_column: "Current_at_850mV"
+
 property_list:
   - "electrocatalyst"
   - "overpotential"
@@ -29,13 +35,13 @@ property_list:
 
 rule_predict_gpy_model:
   # Output file path where the predictions will be saved
-  output_file: "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
+  output_file: "Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
 
 # Configuration for training and testing GPy model with material vectors for current density prediction
 
 rule_predict_gpy_with_vector:
   # Output file path where the predictions will be saved
-  output_file: "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
+  output_file: "Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
 
 # Configuration for prediction using the standard vector method
 
@@ -47,5 +53,4 @@ rule_predict_with_standard_vector:
     - "Ag"
     - "Pt"
   # Output file path where the similarity results will be saved
-  output_file: "path/to/your/Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
-
+  output_file: "Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
