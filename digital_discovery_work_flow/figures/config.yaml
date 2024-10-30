@@ -1,9 +1,16 @@
 # Centralized file paths and parameters (for paths used in multiple rules)
 
-Ag_Pd_Ru: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Ru.csv"
-Ag_Pd_Pt: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt.csv"
-Ag_Pd_Pt_Ru: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt_Ru.csv"
+# Data for publication from
+# Banko, L., Krysiak, O., Schumann, W., & Ludwig, A. (2024).
+# Electrochemical activity of several compositions in the system Ag-Pd-Pt-Ru for the oxygen reduction reaction in 0.05 M KOH solution pH 12.5 [Data set].
+# Zenodo. https://doi.org/10.5281/zenodo.13992986
+
+Ag_Pd_Ru: "/path/to/your/Ag_Pd_Ru.csv"
+Ag_Pd_Pt: "/path/to/your/Ag_Pd_Pt.csv"
+Ag_Pd_Pt_Ru: "/path/to/your/Ag_Pd_Pt_Ru.csv"
+
 HEA_model: "../word2vec_model/HEA_electrocatalyst.model"
+
 prediction_gpy: "../prediction_models/Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
 prediction_gpy_embedding: "../prediction_models/Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
 prediction_standard_vec: "../prediction_models/Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"

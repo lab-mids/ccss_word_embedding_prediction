@@ -1,6 +1,8 @@
 # Configuration file for Snakemake workflow
 # Each section corresponds to a rule in the Snakemake file
 
+# Note: the `pybliometrics` folder needs to be manually created
+
 # Centralized file paths and parameters
 collected_papers: "HEA_electrocatalyst.csv"
 processed_papers: "HEA_electrocatalyst_processed_df.csv"
@@ -13,7 +15,7 @@ rule_collect_papers:
   # Keywords for the paper query
   keywords: "'electrocatalyst' OR 'high entropy alloy'"
   # Start year for the paper query, or "" for no start year
-  startyear: #2022
+  startyear:
   # End year for the paper query
   endyear: 2024
   # Whether to search for open access papers
@@ -37,10 +39,8 @@ pybliometrics_config:
 
   Authentication:
     APIKey:
-      - "0190a172f7e8803de26a9a38d772baef"
-      - "6150dee426f972403015294d01fa7626"
-      - "a276f01bfdd2dcb271734ecdbd3495d2"
-      # Add more API keys as needed
+      - "your_scopy_api_key"
+      # Add more API keys as needed, multiple are possible
 
   Requests:
     Timeout: 36000

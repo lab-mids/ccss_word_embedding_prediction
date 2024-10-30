@@ -5,11 +5,14 @@
 # Electrochemical activity of several compositions in the system Ag-Pd-Pt-Ru for the oxygen reduction reaction in 0.05 M KOH solution pH 12.5 [Data set].
 # Zenodo. https://doi.org/10.5281/zenodo.13992986
 
-Ag_Pd_Ru: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Ru.csv"
-Ag_Pd_Pt: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt.csv"
-Ag_Pd_Pt_Ru: "/home/markus/Documents/Paper/2023_Zhang_echem_prediction_word_embeddings/data/13992986/Ag_Pd_Pt_Ru.csv"
+Ag_Pd_Ru: "/path/to/your/Ag_Pd_Ru.csv"
+Ag_Pd_Pt: "/path/to/your/Ag_Pd_Pt.csv"
+Ag_Pd_Pt_Ru: "/path/to/your/Ag_Pd_Pt_Ru.csv"
+
 HEA_model: "../word2vec_model/HEA_electrocatalyst.model"
+
 optimization_results: "optimization_results.csv"
+
 target_column: "Current_at_850mV"
 
 property_list:
