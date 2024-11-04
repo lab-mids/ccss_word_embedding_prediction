@@ -4,14 +4,16 @@ configfile: "config.yaml"
 # Top-level rule to encompass the entire workflow
 rule all:
     input:
-        expand("{output}", output=config["rule_calculate_concentration_stats"]["output_paths"]) +
-        expand("{output}", output=config["rule_calculate_current_density_stats"]["output_path"])
+        config["rule_calculate_concentration_stats"]["output_paths"],
+        config["rule_calculate_current_density_stats"]["output_path"],
+        config["rule_analyze_predictions"]["output_file"]
+
 
 # Rule for calculating concentration statistics for elements
 
 rule calculate_concentration_stats:
     input:
-        filepaths=config["rule_calculate_concentration_stats"]["filepaths"]
+        filepaths=[config["Ag_Pd_Ru"], config["Ag_Pd_Pt"], config["Ag_Pd_Pt_Ru"]]
     output:
         output_paths=config["rule_calculate_concentration_stats"]["output_paths"]
     log:
@@ -30,7 +32,7 @@ rule calculate_concentration_stats:
 
 rule calculate_current_density_stats:
     input:
-        filepaths=config["rule_calculate_current_density_stats"]["filepaths"]
+        filepaths=[config["Ag_Pd_Ru"], config["Ag_Pd_Pt"], config["Ag_Pd_Pt_Ru"]]
     output:
         output_path=config["rule_calculate_current_density_stats"]["output_path"]
     log:

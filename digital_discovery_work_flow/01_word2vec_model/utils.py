@@ -1,6 +1,7 @@
 import os
 import configparser
 
+
 # Subclass ConfigParser to maintain case sensitivity
 class MyConfigParser(configparser.ConfigParser):
     def optionxform(self, optionstr):
@@ -24,11 +25,11 @@ def update_pybliometrics_config(config_path, new_config):
         if not config.has_section(section):
             config.add_section(section)
         for key, value in values.items():
-            if key == "APIKey" and isinstance(value,list):
+            if key == "APIKey" and isinstance(value, list):
                 # Join list of API keys into a comma-separated string
                 value = ",".join(value)
-            config.set(section,key,str(value))
+            config.set(section, key, str(value))
 
     # Write the updated (or new) config back to the file
-    with open(config_path,'w') as configfile:
+    with open(config_path, "w") as configfile:
         config.write(configfile)

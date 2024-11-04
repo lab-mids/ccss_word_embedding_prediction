@@ -1,11 +1,14 @@
-gensim
-GPy
-matnexus
-matplotlib
-nltk
-numpy
-pandas
-plotly
-scikit_learn
-scipy
-seaborn
+pulp == 2.6.0
+gensim == 4.3.3
+gpy == 1.13.2
+matnexus == 0.2.1
+matplotlib == 3.9.2
+nltk == 3.9.1
+numpy == 1.26.4
+pandas == 2.2.3
+plotly = 5.24.1
+scikit_learn == 1.5.2
+scipy == 1.12.0
+seaborn == 0.13.2
+kaleido == 0.2.1
+snakemake == 7.32.4

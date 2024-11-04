@@ -1,6 +1,6 @@
-import argparse
 import pandas as pd
 import numpy as np
+import argparse
 import GPy
 
 
@@ -173,59 +173,41 @@ class MaterialAnalysis:
         gp_model.optimize(messages=False)
 
         Y_pred, _ = gp_model.predict(X_test)
-
-        test_dataset["Predicted_" + self.target_column] = Y_pred.flatten()
+        test_dataset["Predicted_Current_at_850mV"] = Y_pred.flatten()
 
         return test_dataset
 
 
-def parse_args():
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Train a GPy model for current density predictions."
+        description="Material Analysis Tool for Training and Testing GP Models."
     )
     parser.add_argument(
-        "--train_files",
+        "--filenames",
         nargs="+",
         required=True,
-        help="Paths to the training dataset CSV files.",
-    )
-    parser.add_argument(
-        "--test_file",
-        type=str,
-        required=True,
-        help="Path to the test dataset CSV file.",
+        help="List of input CSV files for training.",
     )
     parser.add_argument(
         "--target_column",
-        type=str,
-        required=True,
-        help="Target column to predict (e.g., 'Current_at_850mV').",
+        default="Current_at_850mV",
+        help="Target column for predictions.",
     )
     parser.add_argument(
-        "--output_file",
-        type=str,
-        required=True,
-        help="Output CSV file to save predictions.",
+        "--output_file", required=True, help="Output CSV file with predictions."
     )
-    return parser.parse_args()
+    args = parser.parse_args()
 
-
-def main():
-    args = parse_args()
-
-    # Initialize the MaterialAnalysis class with the target column
+    # Initialize MaterialAnalysis with specified target column
     analysis = MaterialAnalysis(target_column=args.target_column)
 
-    # Load and prepare the datasets
-    train_datasets = analysis.load_and_prepare_datasets(args.train_files)
-    test_dataset = pd.read_csv(args.test_file)
+    # Load and prepare datasets
+    datasets = analysis.load_and_prepare_datasets(args.filenames)
 
-    # Train the model and make predictions
-    result_dataset = analysis.train_and_test_model(train_datasets, test_dataset)
+    # Train on the first N-1 datasets and test on the last dataset
+    trained_data_with_predictions = analysis.train_and_test_model(
+        datasets[:-1], datasets[-1]
+    )
 
-    # Save the predictions to the output file
-    result_dataset.to_csv(args.output_file, index=False)
-
-
-if __name__ == "__main__":
-    main()
+    # Save the output file with predictions
+    trained_data_with_predictions.to_csv(args.output_file, index=False)

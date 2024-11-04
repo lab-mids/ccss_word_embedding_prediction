@@ -9,9 +9,7 @@ def plot_stacked_step_histogram(
     fig, ax = plt.subplots(figsize=(10, 8))
     assert len(system_names) == len(
         dataframes
-    ), "Each dataframe needs a corresponding system name."
-
-    markers = ["o", "s", "^", "p", "*", "H", "D", "X", "<", ">"]  # Define marker styles
+    ), "Each dataframe needs a corresponding system name."  # Define marker styles
 
     for data_index, (df, system_name) in enumerate(zip(dataframes, system_names)):
         if column_name in df.columns:
@@ -29,7 +27,6 @@ def plot_stacked_step_histogram(
                 bin_centers,
                 n,
                 linestyle="",
-                marker=markers[data_index % len(markers)],
                 color=line_color,
             )  # Add markers
 

@@ -1,0 +1,59 @@
+# File paths and parameters
+
+# Data for publication from
+# Banko, L., Krysiak, O., Schumann, W., & Ludwig, A. (2024).
+# Electrochemical activity of several compositions in the system Ag-Pd-Pt-Ru for the oxygen reduction reaction in 0.05 M KOH solution pH 12.5 [Data set].
+# Zenodo. https://doi.org/10.5281/zenodo.13992986
+
+Ag_Pd_Ru: "/path/to/your/Ag_Pd_Ru.csv"
+Ag_Pd_Pt: "/path/to/your/Ag_Pd_Pt.csv"
+Ag_Pd_Pt_Ru: "/path/to/your/Ag_Pd_Pt_Ru.csv"
+
+HEA_model: "../01_word2vec_model/HEA_electrocatalyst.model"
+
+optimization_results: "optimization_results.csv"
+
+target_column: "Current_at_850mV"
+
+property_list:
+  - "electrocatalyst"
+  - "overpotential"
+  - "tafel slope"
+  - "exchange current density"
+  - "stability"
+  - "durability"
+  - "surface area"
+  - "active site"
+  - "turnover frequency"
+  - "electrocatalytic activity"
+  - "faradaic efficiency"
+  - "charge transfer"
+  - "adsorption energy"
+  - "electronic structure"
+  - "electronegativity"
+  - "crystal structure"
+  - "surface morphology"
+
+# Configuration for training and testing GPy model for current density prediction
+
+rule_predict_gpy_model:
+  # Output file path where the predictions will be saved
+  output_file: "Ag_Pd_Pt_Ru_with_predictions_Gpy.csv"
+
+# Configuration for training and testing GPy model with material vectors for current density prediction
+
+rule_predict_gpy_with_vector:
+  # Output file path where the predictions will be saved
+  output_file: "Ag_Pd_Pt_Ru_with_predictions_Gpy_with_embedding.csv"
+
+# Configuration for prediction using the standard vector method
+
+rule_predict_with_standard_vector:
+  # List of elements to use for similarity calculation
+  elements:
+    - "Ru"
+    - "Pd"
+    - "Ag"
+    - "Pt"
+  # Output file path where the similarity results will be saved
+  output_file: "Ag_Pd_Pt_Ru_with_predictions_Standard_Vec.csv"
